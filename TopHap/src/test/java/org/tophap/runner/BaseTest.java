@@ -1,4 +1,4 @@
-package org.tophap;
+package org.tophap.runner;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -6,9 +6,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -19,13 +17,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-public class SingleTest {
+public class BaseTest {
 
-    private static String HUB_URL = "http://localhost:4444/wd/hub";
+    public static final String HUB_URL = "http://localhost:4444/wd/hub";
+
     private static boolean remoteWebDriver = false;
 
     @BeforeAll
-    private static void setUpAll() throws IOException {
+    public static void initAll() throws IOException {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(HUB_URL + "/status");
@@ -35,12 +34,15 @@ public class SingleTest {
         }
     }
 
+    protected boolean isRemoteWebDriver() {
+        return remoteWebDriver;
+    }
+
     private WebDriver driver;
 
-    @BeforeEach
-    private void setUp() throws MalformedURLException {
+    protected void startTest() throws MalformedURLException {
 
-        if (remoteWebDriver) {
+        if (isRemoteWebDriver()) {
             this.driver = new RemoteWebDriver(new URL(HUB_URL), DesiredCapabilities.chrome());
         } else {
             this.driver = new ChromeDriver();
@@ -49,12 +51,12 @@ public class SingleTest {
         this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterEach
-    public void setDown() {
+    protected void finishTest() {
         driver.quit();
     }
 
-    public WebDriver getDriver() {
+    protected WebDriver getDriver() {
         return driver;
     }
+
 }

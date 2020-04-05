@@ -2,10 +2,12 @@ package org.tophap;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.tophap.runner.BaseTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class RegisterPopup extends SingleTest {
+class RegisterPopup extends BaseTest {
+
     @Test
     void registerPopup() throws InterruptedException {
         String emailRandom  = Math.random() + "+TA@example.com";
