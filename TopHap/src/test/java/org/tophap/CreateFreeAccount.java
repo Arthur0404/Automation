@@ -1,5 +1,6 @@
 package org.tophap;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateFreeAccount extends SingleTest {
 
+    @Disabled
     @Test
     void createFreeAccount() throws InterruptedException {
         // open Sign up form from the Home page
