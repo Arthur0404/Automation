@@ -2,11 +2,25 @@ package org.tophap;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class TestHelper {
 
-    public static void login(WebDriver driver) {
+    public static void loginTheSite(WebDriver driver) {
+        driver.get("https://next.tophap.com/");
         driver.findElement(By.xpath("//button[text()='Try for Free']")).click();
-        driver.findElement(By.cssSelector("svg.th-close-button")).click();
+
+        closeWelcome(driver);
+    }
+
+    public static void closeWelcome(WebDriver drive) {
+        List<WebElement> frames = drive.findElements(By.xpath("//iframe[@title='Intercom Live Chat']"));
+        if (frames.size() > 0) {
+            drive.switchTo().frame(frames.get(0));
+            drive.findElement(By.xpath("//span[@aria-label='Close']")).click();
+            drive.switchTo().defaultContent();
+        }
     }
 }
