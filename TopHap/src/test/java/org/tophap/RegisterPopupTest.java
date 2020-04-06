@@ -3,11 +3,11 @@ package org.tophap;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.tophap.runner.BaseTest;
+import org.tophap.runner.SingleTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class RegisterPopup extends BaseTest {
+class RegisterPopupTest extends SingleTest {
 
     @Disabled
     @Test

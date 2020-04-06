@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class CreateFreeAccount extends SingleTest {
+public class CreateFreeAccountTest extends SingleTest {
 
     @Disabled
     @Test
