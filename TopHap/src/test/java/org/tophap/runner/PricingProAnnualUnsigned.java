@@ -59,7 +59,9 @@ public class PricingProAnnualUnsigned extends SingleTest {
 
         //Sign in with pre-registered user
         TestHelper.signIn(getDriver());
+        Thread.sleep(4000);
         getStartedButtonProPlan.click();
+        Thread.sleep(6000);
 
         //Enter Billing Data (after switching to iFrame)
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
@@ -72,10 +74,6 @@ public class PricingProAnnualUnsigned extends SingleTest {
         WebDriverWait wait = new WebDriverWait(getDriver(),10);
         WebElement newCancelButton=wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*/button[@class='MuiButtonBase-root th-button th-cancel-button']")));
         assertTrue(newCancelButton.getText().equals("Cancel"));
-
-        assertTrue(getStartedButtonProPlan.getText().contains("Cancel"));
-        Thread.sleep(2000);
-
 
         //Go to Account --> Billing --> Cancel Plan --> Remove payment Method and Unsubscribe from Pro Plan
         TestHelper.profileDropMenu(getDriver());
