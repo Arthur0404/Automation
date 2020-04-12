@@ -4,6 +4,7 @@ import com.sun.xml.internal.ws.message.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.*;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class TestHelper {
         }
     }
 
-    public static final String CCARD="4242424242424242";
+    public static final String CCARD="5555555555554444";
 
     public static void enterCreditCardData(WebDriver driver){
         driver.findElement(By.xpath("//*[@name='cardnumber']")).sendKeys(CCARD);
@@ -48,7 +49,7 @@ public class TestHelper {
         driver.findElement(By.xpath("//input[@placeholder='E-mail']")).sendKeys(EMAIL);
         driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(PASS);
         driver.findElement(By.xpath("//*[@class='MuiButtonBase-root th-button']")).click();
-        Thread.sleep(4000);
+        Thread.sleep(5000);
     }
 
     public static void profileDropMenu(WebDriver driver){

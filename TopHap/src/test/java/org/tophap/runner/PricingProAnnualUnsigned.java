@@ -7,17 +7,17 @@ import org.openqa.selenium.*;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tophap.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PricingProAnnualUnsigned extends SingleTest {
 
     @Test
     void pricingProAnnualUnsigned() throws InterruptedException {
+        //Go to Pricing Page
         getDriver().get("https://next.tophap.com");
         getDriver().manage().window().maximize();
         TestHelper.PricingMenu(getDriver());
@@ -41,7 +41,7 @@ public class PricingProAnnualUnsigned extends SingleTest {
         //Annual plan pre-selected by default
         WebElement annualBill18 = getDriver().findElement(By.xpath("//div[@class='th-period-picker']/button[1]"));
         assertTrue(annualBill18.getAttribute("class").contains("selected"));
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         //Cost to be $45.00 per month by default on Annual plan
         assertTrue(getDriver().findElement(By.xpath("//div[@class='th-plan-info th-recommended']//*[@class='th-price']")).
                 getText().contains("45"));
@@ -76,24 +76,25 @@ public class PricingProAnnualUnsigned extends SingleTest {
         Thread.sleep(2000);
 
 
-        //Go to Account --> Billing --> Cancel Plan --> Remove payment Method and Unsubscribe
+        //Go to Account --> Billing --> Cancel Plan --> Remove payment Method and Unsubscribe from Pro Plan
         TestHelper.profileDropMenu(getDriver());
         assertEquals(getDriver().findElement(By.xpath("//input[@placeholder='Email']")).getAttribute("value"),
                 TestHelper.EMAIL);
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         TestHelper.billingAccountManager(getDriver());
+        Thread.sleep(2000);
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-cancel-button']")).click();
-        Thread.sleep(3000);
+        Thread.sleep(4000);
         assertTrue(getDriver().findElement(By.xpath("//span[@class='jsx-844615980 th-card-last4']"))
-                .getText().contains(TestHelper.CCARD.substring(TestHelper.CCARD.length()-4)));
+                .getText().endsWith(TestHelper.CCARD.substring(TestHelper.CCARD.length()-4)));
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-action-button " +
                 "th-cancel-button']")).click();
-        Thread.sleep(2000);
-        getDriver().navigate().refresh();
+        Thread.sleep(1000);
 
-        //Go to Pricing Menu and verify The Pro plan is cancelled
+        //Go to Pricing Menu and verify The Pro plan is cancelled and user is a free member
         TestHelper.PricingMenu(getDriver());
+
         Thread.sleep(2000);
-        assertTrue(getStartedButtonProPlan.getText().equals("Get Started"));
+        assertTrue(getDriver().findElement(By.xpath("//*[contains(text(),'free member now')]")).isDisplayed());
     }
 };
