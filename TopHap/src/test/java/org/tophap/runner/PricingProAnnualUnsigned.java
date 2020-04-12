@@ -62,17 +62,18 @@ public class PricingProAnnualUnsigned extends SingleTest {
         getStartedButtonProPlan.click();
 
         //Enter Billing Data (after switching to iFrame)
-        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
         getDriver().switchTo().frame(iFramePayment);
         Thread.sleep(2000);
         TestHelper.enterCreditCardData(getDriver());
-        Thread.sleep(2000);
+        Thread.sleep(7000);
 
         //After Credit Card data is submitted the `Get Started` Button shall be switched to `Cancel` button
-        WebElement newCancelButton = wait.until(ExpectedConditions.visibilityOfElementLocated
-                (By.xpath("//*/button[@class='MuiButtonBase-root th-button th-cancel-button']")));
+        WebDriverWait wait = new WebDriverWait(getDriver(),10);
+        WebElement newCancelButton=wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*/button[@class='MuiButtonBase-root th-button th-cancel-button']")));
         assertTrue(newCancelButton.getText().equals("Cancel"));
+
+        assertTrue(getStartedButtonProPlan.getText().contains("Cancel"));
         Thread.sleep(2000);
 
 
