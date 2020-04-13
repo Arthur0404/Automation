@@ -78,4 +78,15 @@ public class HoverOverTest extends MultipleTest {
         //tool tip does not appear
         assertTrue(getDriver().findElement(By.xpath("//div[text()='Property User']")).isDisplayed());
     }
+    @Test
+    void bedroomCountTest() {
+        TestHelper.loginTheSite(getDriver());
+
+        Actions action = new Actions(getDriver());
+        List<WebElement> buttons = getDriver().findElements(By.xpath("//span[text()='Bedroom Count']"));
+        action.moveToElement(buttons.get(0)).perform();
+
+        assertTrue(getDriver().findElement(By.xpath("//div[text()='Property Number of Bedrooms']")).isDisplayed());
+    }
 }
+
