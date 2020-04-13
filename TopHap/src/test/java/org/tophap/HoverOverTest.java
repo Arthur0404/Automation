@@ -12,70 +12,48 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class HoverOverTest extends MultipleTest {
+public class HoverOverTest extends SingleTest {
+
+    private final String[] BUTTONS_NAMES = {
+            "Listings",
+            "Value Estimates",
+            "$/ft² Estimates",
+            "Living Area",
+            "Bedroom Count",
+            "Bathroom Count",
+            "Lot Size",
+            "Age",
+            "Ownership Time",
+            "DOM",
+            "List vs Sold",
+            "Permits"
+    };
+
+    private final String[] HOOVER_OVER_TEXTS = {
+            "Properties",
+            "Estimated Property Values",
+            "Estimated Price per Square Foot",
+            "Property Living Area (square feet)",
+            "Property Number of Bedrooms",
+            "Property Number of Bathrooms",
+            "Property Lot Size (acres)",
+            "Property Age (years)",
+            "Current Ownership Time (days)",
+            "Days on market",
+            "List Price to Sell Price Ratio (%)",
+            "Permits"
+    };
 
     @Test
-    void valueEstimatesTest() {
-
-        TestHelper.loginTheSite(getDriver());
-
-        Actions action = new Actions(getDriver());
-        List<WebElement> buttons = getDriver().findElements(By.xpath("//span[text()='Value Estimates']"));
-        action.moveToElement(buttons.get(0)).perform();
-
-        assertTrue(getDriver().findElement(By.xpath("//div[text()='Estimated Property Values']")).isDisplayed());
-    }
-
-    @Test
-    void ageTest() {
-
-        TestHelper.loginTheSite(getDriver());
-        getDriver().manage().window().maximize();
-
-        Actions action = new Actions(getDriver());
-        List<WebElement> buttons = getDriver().findElements(By.xpath("//span[text()='Age']"));
-        action.moveToElement(buttons.get(0)).perform();
-
-        assertTrue(getDriver().findElement(By.xpath("//div[text()='Property Age (years)']")).isDisplayed());
-    }
-
-    @Test
-    void ownershipTimeTest() {
-
-        TestHelper.loginTheSite(getDriver());
-        getDriver().manage().window().maximize();
-
-        Actions action = new Actions(getDriver());
-        List<WebElement> buttons = getDriver().findElements(By.xpath("//span[text()='Ownership Time']"));
-        action.moveToElement(buttons.get(0)).perform();
-
-        assertTrue(getDriver().findElement(By.xpath("//div[text()='Current Ownership Time (days)']")).isDisplayed());
-    }
-    @Disabled
-    @Test
-    void ListSoldTest() {
+    void hoverOverTest() {
 
         TestHelper.loginTheSite(getDriver());
         getDriver().manage().window().maximize();
 
-        Actions action = new Actions(getDriver());
-        List<WebElement> buttons = getDriver().findElements(By.xpath("//span[text()='List vs Sold']"));
-        action.moveToElement(buttons.get(0)).perform();
-        // tooltip text needs to be checked by product owner
-        assertTrue(getDriver().findElement(By.xpath("//div[text()='List Price to Sell Price Ratio (%)']")).isDisplayed());
-    }
-
-    @Disabled
-    @Test
-    void propertyUseTest() {
-
-        TestHelper.loginTheSite(getDriver());
-        getDriver().manage().window().maximize();
-
-        Actions action = new Actions(getDriver());
-        List<WebElement> buttons = getDriver().findElements(By.xpath("//span[text()='Property Use']"));
-        action.moveToElement(buttons.get(0)).perform();
-        //tool tip does not appear
-        assertTrue(getDriver().findElement(By.xpath("//div[text()='Property User']")).isDisplayed());
+        for (int i = 0; i < BUTTONS_NAMES.length; i++) {
+            TestHelper.moveToElement(getDriver(), By.xpath("//span[text()='" + BUTTONS_NAMES[i] + "']"));
+            assertTrue(getDriver().findElement(By.xpath("//div[text()='" + HOOVER_OVER_TEXTS[i] + "']")).isDisplayed());
+        }
     }
 }
+
