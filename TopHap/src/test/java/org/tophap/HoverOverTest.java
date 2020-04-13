@@ -1,20 +1,14 @@
 package org.tophap;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.tophap.runner.MultipleTest;
 import org.tophap.runner.SingleTest;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HoverOverTest extends SingleTest {
 
-    private final String[] BUTTONS_NAMES = {
+    private static final String[] BUTTONS_NAMES = {
             "Listings",
             "Value Estimates",
             "$/ft² Estimates",
@@ -29,7 +23,7 @@ public class HoverOverTest extends SingleTest {
             "Permits"
     };
 
-    private final String[] HOOVER_OVER_TEXTS = {
+    private static final String[] HOOVER_OVER_TEXTS = {
             "Properties",
             "Estimated Property Values",
             "Estimated Price per Square Foot",
@@ -51,8 +45,8 @@ public class HoverOverTest extends SingleTest {
         getDriver().manage().window().maximize();
 
         for (int i = 0; i < BUTTONS_NAMES.length; i++) {
-            TestHelper.moveToElement(getDriver(), By.xpath("//span[text()='" + BUTTONS_NAMES[i] + "']"));
-            assertTrue(getDriver().findElement(By.xpath("//div[text()='" + HOOVER_OVER_TEXTS[i] + "']")).isDisplayed());
+            TestHelper.moveToElement(getDriver(), By.xpath(String.format("//span[text()='%s']", BUTTONS_NAMES[i])));
+            assertTrue(getDriver().findElement(By.xpath(String.format("//div[text()='%s']", HOOVER_OVER_TEXTS[i]))).isDisplayed());
         }
     }
 }
