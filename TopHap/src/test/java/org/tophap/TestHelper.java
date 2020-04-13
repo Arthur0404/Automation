@@ -3,6 +3,7 @@ package org.tophap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
@@ -22,5 +23,11 @@ public class TestHelper {
             drive.findElement(By.xpath("//span[@aria-label='Close']")).click();
             drive.switchTo().defaultContent();
         }
+    }
+
+    public static void moveToElement(WebDriver driver, By locator) {
+        Actions action = new Actions(driver);
+        WebElement button = driver.findElement(locator);
+        action.moveToElement(button).perform();
     }
 }
