@@ -1,5 +1,6 @@
 package org.walmart.tests;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SearchIphone8Test extends SingleTest {
 
+    @Disabled
     @Test
     void iphone8NextDayDeliveryTest() {
 
