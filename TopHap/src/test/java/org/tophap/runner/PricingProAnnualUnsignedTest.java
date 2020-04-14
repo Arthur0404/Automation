@@ -28,6 +28,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
                 "Advanced",
                 "Enterprise"
         };
+
         List<WebElement> pricePlans = getDriver().findElements(By.xpath("//h5"));
 
         int i = 0;
