@@ -3,18 +3,15 @@ package org.tophap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
 public class TestHelper {
 
-
-
     public static void loginTheSite(WebDriver driver) {
         driver.get("https://next.tophap.com/");
         driver.findElement(By.xpath("//button[text()='Try for Free']")).click();
-
         closeWelcome(driver);
     }
 

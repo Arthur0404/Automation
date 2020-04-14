@@ -19,7 +19,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         WebDriverWait wait = new WebDriverWait(getDriver(), 10);
 
         //Go to Pricing Page
-        getDriver().get("https://next.tophap.com");
+        TestHelper.loginTheSite(getDriver());
         getDriver().manage().window().maximize();
         TestHelper.selectPricing(getDriver());
 
