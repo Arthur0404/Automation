@@ -3,6 +3,7 @@ package org.tophap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.*;
 import org.openqa.selenium.support.ui.*;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public class TestHelper {
     }
 
     public static void selectPricing(WebDriver driver) {
+        driver.get("https://next.tophap.com/");
+        driver.manage().window().maximize();
         driver.findElement(By.linkText("Pricing")).click();
     }
 

@@ -18,9 +18,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
     void pricingProAnnualUnsigned() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(getDriver(), 10);
 
-        //Go to Pricing Page
-        TestHelper.loginTheSite(getDriver());
-        getDriver().manage().window().maximize();
+        //Go to Home --> Pricing Page
         TestHelper.selectPricing(getDriver());
 
         //List of 4 Plans to check the presence and titles
@@ -32,9 +30,9 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         };
         List<WebElement> pricePlans = getDriver().findElements(By.xpath("//h5"));
 
-        int i=0;
-        for (String el: PLANS) {
-        assertEquals(el, pricePlans.get(i).getText());
+        int i = 0;
+        for (String el : PLANS) {
+            assertEquals(el, pricePlans.get(i).getText());
             i++;
         }
 
@@ -54,15 +52,13 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
                 (By.xpath("//div[@class='Toastify__toast Toastify__toast--error th-notification-wrapper']"))));
         getStartedButtonProPlan.click();
 
-        //Enter Billing Data (after switching to iFrame)
+        //Enter Billing Data (after switching to iFrame) -Submit and `Get Started` Button shall be switched to `Cancel` button
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFramePayment));
         TestHelper.enterCreditCardData(getDriver(), TestHelper.CREDIT_CARD, TestHelper.CREDIT_CARD_EXPIRATION,
-                TestHelper.CREDIT_CARD_CVV,  TestHelper.CREDIT_CARD_PASSWORD);
+                TestHelper.CREDIT_CARD_CVV, TestHelper.CREDIT_CARD_PASSWORD);
         getDriver().switchTo().parentFrame();
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-submit-button']")).click();
-
-        //After Credit Card data is submitted the `Get Started` Button shall be switched to `Cancel` button
         wait.until(ExpectedConditions.visibilityOf(getDriver().findElement
                 (By.xpath("//*/button[@class='MuiButtonBase-root th-button th-cancel-button']"))));
 
