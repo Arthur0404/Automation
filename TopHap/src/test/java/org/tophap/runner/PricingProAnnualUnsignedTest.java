@@ -82,4 +82,4 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         TestHelper.selectPricing(getDriver());
         assertTrue(getDriver().findElement(By.xpath("//span[text()='You are free member now']")).isDisplayed());
     }
-};
+}
