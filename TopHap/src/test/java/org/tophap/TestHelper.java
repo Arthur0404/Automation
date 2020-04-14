@@ -23,8 +23,6 @@ public class TestHelper {
     }
 
     public static void selectPricing(WebDriver driver) {
-        driver.get("https://next.tophap.com/");
-        driver.manage().window().maximize();
         driver.findElement(By.linkText("Pricing")).click();
     }
 

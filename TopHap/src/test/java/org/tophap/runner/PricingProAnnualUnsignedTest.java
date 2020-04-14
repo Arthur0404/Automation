@@ -19,6 +19,8 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         WebDriverWait wait = new WebDriverWait(getDriver(), 10);
 
         //Go to Home --> Pricing Page
+        getDriver().get("https://next.tophap.com/");
+        getDriver().manage().window().maximize();
         TestHelper.selectPricing(getDriver());
 
         //List of 4 Plans to check the presence and titles
@@ -56,6 +58,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         //Enter Billing Data (after switching to iFrame) -Submit and `Get Started` Button shall be switched to `Cancel` button
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFramePayment));
+        Thread.sleep(1000);//required sometimes
         TestHelper.enterCreditCardData(getDriver(), TestHelper.CREDIT_CARD, TestHelper.CREDIT_CARD_EXPIRATION,
                 TestHelper.CREDIT_CARD_CVV, TestHelper.CREDIT_CARD_PASSWORD);
         getDriver().switchTo().parentFrame();
