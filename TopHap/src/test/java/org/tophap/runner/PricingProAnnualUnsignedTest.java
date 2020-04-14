@@ -16,7 +16,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
 
     @Test
     void pricingProAnnualUnsigned() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        WebDriverWait wait = new WebDriverWait(getDriver(), 5);
 
         //Go to Home --> Pricing Page
         getDriver().get("https://next.tophap.com/");
