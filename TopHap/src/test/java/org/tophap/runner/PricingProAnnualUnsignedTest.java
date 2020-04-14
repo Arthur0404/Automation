@@ -56,8 +56,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
 
         //Enter Billing Data (after switching to iFrame)
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
-        wait.until(ExpectedConditions.visibilityOf(iFramePayment));
-        getDriver().switchTo().frame(iFramePayment);
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFramePayment));
         TestHelper.enterCreditCardData(getDriver(), TestHelper.CREDIT_CARD, TestHelper.CREDIT_CARD_EXPIRATION,
                 TestHelper.CREDIT_CARD_CVV,  TestHelper.CREDIT_CARD_PASSWORD);
         getDriver().switchTo().parentFrame();
