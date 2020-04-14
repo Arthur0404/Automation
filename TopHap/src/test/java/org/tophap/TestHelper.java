@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -21,6 +19,18 @@ public class TestHelper {
         driver.findElement(By.xpath("//button[text()='Try for Free']")).click();
 
         closeWelcome(driver);
+    }
+
+    public static void signUp(WebDriver driver, String name, String email, String pass) throws InterruptedException {
+        // open Sign up form from the Home page
+        driver.findElement(By.className("th-signup-button")).click();
+        // verify you are on the Sign up form
+        assertEquals("Sign Up for Free", driver.findElement(By.xpath("//div[@role='dialog']//h1")).getText());
+        // populate Sign up form and Submit
+        driver.findElement(By.xpath("//input[@placeholder='Name']")).sendKeys(name);
+        driver.findElement(By.xpath("//input[@placeholder='Email']")).sendKeys(email);
+        driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(pass);
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
     }
 
     public static void closeWelcome(WebDriver drive) {
