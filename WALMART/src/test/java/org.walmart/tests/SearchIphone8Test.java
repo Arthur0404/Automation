@@ -2,9 +2,7 @@ package org.walmart.tests;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.walmart.pages.HomePage;
+import org.walmart.pages.SearchPage;
 import org.walmart.runner.SingleTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,25 +14,19 @@ public class SearchIphone8Test extends SingleTest {
     @Test
     void iphone8NextDayDeliveryTest() {
 
-        HomePage hp = new HomePage(getDriver());
+        SearchPage sp = new SearchPage(getDriver());
+        String noResult = "No results found in NextDay with your current filter.";
 
-        getDriver().get(hp.HOME_URL);
+        getDriver().get(sp.search_url);
         getDriver().manage().window().maximize();
 
-        hp.globalSearchInput.sendKeys("iphone8");
-        hp.globalSearchBtn.click();
+        sp.globalSearch("iphone8");
+        assertTrue(sp.searchResultList.size() > 0);
 
-        assertTrue(hp.searchResultList.size() > 0);
+        sp.nextDayDeliveryClick();
 
-        hp.nextDayDeliveryBtn.click();
-
-        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
-        wait.until(ExpectedConditions.elementToBeClickable(hp.cssNextDayDeliveryMessage));
-        hp.cssNextDayDeliveryMessage.click();
-
-        assertTrue(hp.noNextDayDeliveryLocator.getText()
-                .contains("No results found in NextDay with your current filter."));
-
+        assertTrue(sp.noNextDayDeliveryLocator.getText()
+                .contains(noResult));
     }
 }
 
