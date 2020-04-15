@@ -58,6 +58,8 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Get Started"));
         proPlanButton.click();
 
+
+
         //Enter Billing Data (after switching to iFrame) -Submit and `Get Started` Button shall be switched to `Cancel` button
         Thread.sleep(2000);
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
