@@ -46,16 +46,18 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
                 getText().contains("45"));
 
         //Choose Pro plan clicking `Get Started` button
-        WebElement getStartedButtonProPlan = getDriver().findElement(By.xpath("//button[text()='Get Started']"));
-        getStartedButtonProPlan.click();
+        WebElement proPlanButton=getDriver().findElement(By.xpath("//div[@class='th-plan-info th-recommended']//button"));
+        //WebElement getStartedButtonProPlan = getDriver().findElement(By.xpath("//button[text()='Get Started']"));
+        proPlanButton.click();
 
         //Sign in with pre-registered user
-        WebElement proPlanButton=getDriver().findElement(By.xpath("//div[@class='th-plan-info th-recommended']//button"));
+
         TestHelper.signIn(getDriver(), TestHelper.EMAIL, TestHelper.PASS);
         wait.until((ExpectedConditions.visibilityOfElementLocated
                 (By.xpath("//div[@class='Toastify__toast Toastify__toast--error th-notification-wrapper']"))));
         wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Get Started"));
-        getStartedButtonProPlan.click();
+        proPlanButton.click();
+
 
         //Enter Billing Data (after switching to iFrame) -Submit and `Get Started` Button shall be switched to `Cancel` button
         Thread.sleep(2000);
