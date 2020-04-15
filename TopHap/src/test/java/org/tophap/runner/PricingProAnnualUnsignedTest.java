@@ -50,22 +50,28 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         getStartedButtonProPlan.click();
 
         //Sign in with pre-registered user
+        WebElement proPlanButton=getDriver().findElement(By.xpath("//div[@class='th-plan-info th-recommended']//button"));
         TestHelper.signIn(getDriver(), TestHelper.EMAIL, TestHelper.PASS);
         wait.until((ExpectedConditions.visibilityOfElementLocated
                 (By.xpath("//div[@class='Toastify__toast Toastify__toast--error th-notification-wrapper']"))));
+        wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Get Started"));
         getStartedButtonProPlan.click();
 
         //Enter Billing Data (after switching to iFrame) -Submit and `Get Started` Button shall be switched to `Cancel` button
+        Thread.sleep(2000);
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFramePayment));
-        Thread.sleep(1000);//required sometimes
 
         TestHelper.enterCreditCardData(getDriver(), TestHelper.CREDIT_CARD, TestHelper.CREDIT_CARD_EXPIRATION,
                 TestHelper.CREDIT_CARD_CVV, TestHelper.CREDIT_CARD_PASSWORD);
-        getDriver().switchTo().parentFrame();
+        getDriver().switchTo().defaultContent();
+        //Thread.sleep(1000);//required sometimes
+
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-submit-button']")).click();
         wait.until(ExpectedConditions.visibilityOf(getDriver().findElement
                 (By.xpath("//*/button[@class='MuiButtonBase-root th-button th-cancel-button']"))));
+        //wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Cancel"));
+
 
         //Go to Account --> Billing --> Cancel Plan --> Remove payment Method and Unsubscribe from Pro Plan
         TestHelper.profileDropMenu(getDriver());
