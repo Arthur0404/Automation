@@ -42,6 +42,7 @@ public class TestHelper {
         }
     }
 
+
     public static void moveToElement(WebDriver driver, By locator) {
         Actions action = new Actions(driver);
         WebElement button = driver.findElement(locator);
