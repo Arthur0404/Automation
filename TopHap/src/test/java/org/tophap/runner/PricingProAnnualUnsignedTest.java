@@ -58,7 +58,6 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Get Started"));
         proPlanButton.click();
 
-
         //Enter Billing Data (after switching to iFrame) -Submit and `Get Started` Button shall be switched to `Cancel` button
         Thread.sleep(2000);
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
@@ -66,8 +65,8 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
 
         TestHelper.enterCreditCardData(getDriver(), TestHelper.CREDIT_CARD, TestHelper.CREDIT_CARD_EXPIRATION,
                 TestHelper.CREDIT_CARD_CVV, TestHelper.CREDIT_CARD_PASSWORD);
-        getDriver().switchTo().defaultContent();
-        //Thread.sleep(1000);//required sometimes
+        getDriver().switchTo().parentFrame();
+        Thread.sleep(2000);//required sometimes
 
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-submit-button']")).click();
         wait.until(ExpectedConditions.visibilityOf(getDriver().findElement
