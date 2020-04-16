@@ -5,17 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tophap.runner.MultipleTest;
-
-import java.net.MalformedURLException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ChangeAccountInfoTest extends MultipleTest {
 
-    private static final By USER_AVATAR_LOCATOR = By.className("UserAvatar--inner");
-    private static final By ACCOUNT_LOCATOR = By.linkText("Account");
     private static final By LOGO_LOCATOR = By.xpath("//a[@class='th-logo']");
     private static final String PHONE_NUMBER = String.valueOf(System.currentTimeMillis()).substring(0, 10);
     private static final String NAME = String.format("TestTest%s", Math.round(Math.random()*100));
@@ -27,18 +23,12 @@ public class ChangeAccountInfoTest extends MultipleTest {
         getDriver().get("https://next.tophap.com/");
         getDriver().manage().window().maximize();
         UserHelper.login(getDriver(), UserHelper.EMAIL, UserHelper.PASSWORD);
-        Thread.sleep(2000);
 
         // Close email confirmation failure PopUp window
-        List<WebElement> emailConfirmationFailureMsg = getDriver().findElements(
-                By.xpath("//div[@class='Toastify__toast-container Toastify__toast-container--top-right th-notification-container']"));
-        if (emailConfirmationFailureMsg.size() > 0) {
-            getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-close-button']")).click();
-        }
+        UserHelper.emailConfirmationFailureMsgClose(getDriver());
 
         // Go to My Account page
-        TestHelper.moveToElement(getDriver(), USER_AVATAR_LOCATOR);
-        getDriver().findElement(ACCOUNT_LOCATOR).click();
+        UserHelper.openUserProfile(getDriver());
     }
 
     @Test
@@ -53,8 +43,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
         // Verify that phone number is updated
         getDriver().findElement(LOGO_LOCATOR).click();
-        TestHelper.moveToElement(getDriver(), USER_AVATAR_LOCATOR);
-        getDriver().findElement(ACCOUNT_LOCATOR).click();
+        UserHelper.openUserProfile(getDriver());
         phoneNumberField = getDriver().findElement(phoneNumberLocator);
         assertEquals(PHONE_NUMBER, phoneNumberField.getAttribute("value"));
     }
@@ -71,8 +60,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
         // Verify that name is updated
         getDriver().findElement(LOGO_LOCATOR).click();
-        TestHelper.moveToElement(getDriver(), USER_AVATAR_LOCATOR);
-        getDriver().findElement(ACCOUNT_LOCATOR).click();
+        UserHelper.openUserProfile(getDriver());
         nameField = getDriver().findElement(nameLocator);
         assertEquals(NAME, nameField.getAttribute("value"));
     }
