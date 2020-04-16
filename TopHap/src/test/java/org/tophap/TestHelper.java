@@ -7,6 +7,8 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -86,5 +88,18 @@ public class TestHelper {
 
     public static void moveToElement(WebDriver driver, By locator) {
         moveToElement(driver, driver.findElement(locator));
+    }
+
+    public static void moveToHiddenElement(WebDriver driver, By locator, By locatorDropDown) throws InterruptedException {
+        Actions action = new Actions(driver);
+        WebElement button = driver.findElement(locator);
+        WebElement buttonDropDown = driver.findElement(locatorDropDown);
+        if (driver.findElement(locator).isDisplayed()) {
+            action.moveToElement(button).perform();
+        } else {
+            action.moveToElement(buttonDropDown).perform();
+            moveToElement(driver,
+                    new WebDriverWait(driver, 10).until(movingIsFinished(locator)));
+        }
     }
 }
