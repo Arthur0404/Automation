@@ -54,18 +54,29 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         TestHelper.signIn(getDriver(), TestHelper.EMAIL, TestHelper.PASS);
         wait.until((ExpectedConditions.visibilityOfElementLocated
                 (By.xpath("//div[@class='Toastify__toast Toastify__toast--error th-notification-wrapper']"))));
-        wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Get Started"));
-        proPlanButton.click();
+        wait.until(ExpectedConditions.visibilityOf(proPlanButton));
 
-        //Enter Billing Data (after switching to iFrame) -Submit and `Get Started` Button shall be switched to `Cancel` button
-        Thread.sleep(2000);
+
+        //Enter Credit Card data
+        if (proPlanButton.getText()=="Cancel") {
+            TestHelper.profileDropMenu(getDriver());
+            assertEquals(getDriver().findElement(By.xpath("//input[@placeholder='Email']")).getAttribute("value"),
+                    TestHelper.EMAIL);
+            TestHelper.billingAccountManager(getDriver());
+            getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-cancel-button']")).click();
+
+            //Go to Pricing Menu and verify The Pro plan is cancelled and user is on a Free plan
+            TestHelper.selectPricing(getDriver());
+            assertTrue(getDriver().findElement(By.xpath("//span[text()='You are free member now']")).isDisplayed());
+        }
+        proPlanButton.click();
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFramePayment));
+        Thread.sleep(2000);
 
         TestHelper.enterCreditCardData(getDriver(), TestHelper.CREDIT_CARD, TestHelper.CREDIT_CARD_EXPIRATION,
                 TestHelper.CREDIT_CARD_CVV, TestHelper.CREDIT_CARD_PASSWORD);
         getDriver().switchTo().parentFrame();
-        Thread.sleep(2000);//required sometimes
 
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-submit-button']")).click();
         wait.until(ExpectedConditions.visibilityOf(getDriver().findElement
