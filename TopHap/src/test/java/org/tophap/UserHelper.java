@@ -30,19 +30,9 @@ public class UserHelper {
         driver.findElement(By.linkText("Account")).click();
     }
 
-    // First option:
     public static void emailConfirmationFailureMsgClose(WebDriver driver) {
-        List<WebElement> emailConfirmationFailureMsg = driver.findElements(
-                By.xpath("//div[@class='Toastify__toast-container Toastify__toast-container--top-right th-notification-container']"));
-        if (emailConfirmationFailureMsg.size() > 0) {
+        WebElement waitForSignUpWindow = new WebDriverWait(driver, 10).until(TestHelper.movingIsFinished(
+                By.xpath("//div[@class='Toastify__toast-container Toastify__toast-container--top-right th-notification-container']")));
             driver.findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-close-button']")).click();
-        }
     }
-
-//    // Second option (which one is better?):
-//    public static void emailConfirmationFailureMsgClose(WebDriver driver) {
-//        WebElement waitForSignUpWindow = new WebDriverWait(driver, 10).until(TestHelper.movingIsFinished(
-//                By.xpath("//div[@class='Toastify__toast-container Toastify__toast-container--top-right th-notification-container']")));
-//            driver.findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-close-button']")).click();
-//    }
 }
