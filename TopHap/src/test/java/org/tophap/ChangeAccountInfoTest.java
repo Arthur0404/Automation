@@ -16,6 +16,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
     private static final By USER_AVATAR_LOCATOR = By.className("UserAvatar--inner");
     private static final By ACCOUNT_LOCATOR = By.linkText("Account");
+    private static final By LOGO_LOCATOR = By.xpath("//a[@class='th-logo']");
     private static final String PHONE_NUMBER = String.valueOf(System.currentTimeMillis()).substring(0, 10);
     private static final String NAME = String.format("TestTest%s", Math.round(Math.random()*100));
 
@@ -51,7 +52,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
         getDriver().findElement(By.xpath("//button[@type='submit']")).click();
 
         // Verify that phone number is updated
-        getDriver().findElement(By.xpath("//a[@class='th-logo']")).click();
+        getDriver().findElement(LOGO_LOCATOR).click();
         TestHelper.moveToElement(getDriver(), USER_AVATAR_LOCATOR);
         getDriver().findElement(ACCOUNT_LOCATOR).click();
         phoneNumberField = getDriver().findElement(phoneNumberLocator);
@@ -69,10 +70,9 @@ public class ChangeAccountInfoTest extends MultipleTest {
         getDriver().findElement(By.xpath("//button[@type='submit']")).click();
 
         // Verify that name is updated
-        getDriver().findElement(By.xpath("//a[@class='th-logo']")).click();
+        getDriver().findElement(LOGO_LOCATOR).click();
         TestHelper.moveToElement(getDriver(), USER_AVATAR_LOCATOR);
         getDriver().findElement(ACCOUNT_LOCATOR).click();
-
         nameField = getDriver().findElement(nameLocator);
         assertEquals(NAME, nameField.getAttribute("value"));
     }
