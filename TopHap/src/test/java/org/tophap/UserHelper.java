@@ -19,4 +19,8 @@ public class UserHelper {
         driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(password);
         driver.findElement(By.xpath("//button[@class='MuiButtonBase-root th-button']")).click();
     }
+    public static void logout(WebDriver driver) {
+        TestHelper.moveToElement(driver, By.className("UserAvatar--inner"));
+        driver.findElement(By.xpath("//li[text()='Sign Out']")).click();
+    }
 }
