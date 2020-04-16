@@ -20,6 +20,8 @@ public class HoverOverTest extends SingleTest {
             "Ownership Time",
             "DOM",
             "List vs Sold",
+            "Walkability",
+            "Elevation",
             "Permits"
     };
 
@@ -35,19 +37,20 @@ public class HoverOverTest extends SingleTest {
             "Current Ownership Time (days)",
             "Days on market",
             "List Price to Sell Price Ratio (%)",
+            "National Walkability Index",
+            "Elevation above sea level",
             "Permits"
     };
 
     @Test
-    void hoverOverTest() {
+    void hoverOverTest() throws InterruptedException {
 
         TestHelper.loginTheSite(getDriver());
-        getDriver().manage().window().maximize();
 
         for (int i = 0; i < BUTTONS_NAMES.length; i++) {
-            TestHelper.moveToElement(getDriver(), By.xpath(String.format("//span[text()='%s']", BUTTONS_NAMES[i])));
+            TestHelper.moveToHiddenElement(getDriver(), By.xpath(
+                    String.format("//span[text()='%s']", BUTTONS_NAMES[i])), By.className("th-more-container"));
             assertTrue(getDriver().findElement(By.xpath(String.format("//div[text()='%s']", HOOVER_OVER_TEXTS[i]))).isDisplayed());
         }
     }
 }
-
