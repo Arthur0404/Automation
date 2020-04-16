@@ -51,14 +51,11 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         proPlanButton.click();
 
         //Sign in with pre-registered user
-
         TestHelper.signIn(getDriver(), TestHelper.EMAIL, TestHelper.PASS);
         wait.until((ExpectedConditions.visibilityOfElementLocated
                 (By.xpath("//div[@class='Toastify__toast Toastify__toast--error th-notification-wrapper']"))));
         wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Get Started"));
         proPlanButton.click();
-
-
 
         //Enter Billing Data (after switching to iFrame) -Submit and `Get Started` Button shall be switched to `Cancel` button
         Thread.sleep(2000);
@@ -74,7 +71,6 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         wait.until(ExpectedConditions.visibilityOf(getDriver().findElement
                 (By.xpath("//*/button[@class='MuiButtonBase-root th-button th-cancel-button']"))));
         //wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Cancel"));
-
 
         //Go to Account --> Billing --> Cancel Plan --> Remove payment Method and Unsubscribe from Pro Plan
         TestHelper.profileDropMenu(getDriver());
