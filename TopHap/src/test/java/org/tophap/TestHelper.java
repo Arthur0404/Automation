@@ -51,45 +51,6 @@ public class TestHelper {
         }
     }
 
-    public static ExpectedCondition<WebElement> movingIsFinished(final By locator) {
-        return new ExpectedCondition<WebElement>() {
-
-            private WebElement element = null;
-            private Point location = null;
-
-            @Override
-            public WebElement apply(WebDriver driver) {
-                if (element == null) {
-                    try {
-                        element = driver.findElement(locator);
-                    } catch (NoSuchElementException e) {
-                        return null;
-                    }
-                }
-
-                if (element.isDisplayed()) {
-                    Point location = element.getLocation();
-                    if (location.equals(this.location)) {
-                        return element;
-                    }
-                    this.location = location;
-                }
-
-                return null;
-             }
-
-            @Override
-            public String toString() {
-                return "moving of element is finished, located by: " + locator;
-            }
-        };
-    }
-
-    public static void moveToElement(WebDriver driver, WebElement element) {
-        Actions action = new Actions(driver);
-        action.moveToElement(element).perform();
-    }
-
     public static final String CREDIT_CARD_4LAST_DIGITS = "1117";
     public static String CREDIT_CARD = "601111111111" + CREDIT_CARD_4LAST_DIGITS;
     public static final String CREDIT_CARD_EXPIRATION = "12/50";
@@ -176,8 +137,6 @@ public class TestHelper {
 
         }
 
-
-}
 
     public static void moveToHiddenElement(WebDriver driver, By locator, By locatorDropDown) throws InterruptedException {
         Actions action = new Actions(driver);
