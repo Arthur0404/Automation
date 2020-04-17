@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.*;
 
 import java.util.List;
 
@@ -129,4 +129,18 @@ public class TestHelper {
     public static void moveToElement(WebDriver driver, By locator) {
         moveToElement(driver, driver.findElement(locator));
     }
+
+    public static void openUserProfile(WebDriver driver) {
+        TestHelper.moveToElement(driver, By.className("UserAvatar--inner"));
+        driver.findElement(By.linkText("Account")).click();
+    }
+
+    public static void emailConfirmationFailureMsgClose(WebDriver driver){
+            WebElement waitForSignUpWindow = new WebDriverWait(driver, 10).until(TestHelper.movingIsFinished(
+                    By.xpath("//div[@class='Toastify__toast-container Toastify__toast-container--top-right th-notification-container']")));
+            driver.findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-close-button']")).click();
+
+        }
+
+
 }
