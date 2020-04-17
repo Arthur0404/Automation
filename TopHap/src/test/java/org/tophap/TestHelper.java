@@ -75,7 +75,7 @@ public class TestHelper {
     }
 
     public static void profileDropMenu(WebDriver driver) {
-        driver.findElement(By.xpath("//div[@class='jsx-3275066862 th-menu-item th-user-avatar']")).click();
+        driver.findElement(By.xpath("//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']")).click();
         driver.findElement(By.linkText("Account")).click();
     }
 

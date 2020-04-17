@@ -52,22 +52,28 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         //Sign in with pre-registered user
         TestHelper.signIn(getDriver(), TestHelper.EMAIL, TestHelper.PASS);
         TestHelper.emailConfirmationFailureMsgClose(getDriver());
+        wait.until(ExpectedConditions.elementToBeClickable(proPlanButton));
 
         //Enter Credit Card data
+        proPlanButton.click();
         Thread.sleep(2000);
-        wait.until(ExpectedConditions.elementToBeClickable(proPlanButton));
         if (proPlanButton.getText()=="Cancel") {
-            TestHelper.openUserProfile(getDriver());
+            TestHelper.profileDropMenu(getDriver());
             assertEquals(getDriver().findElement(By.xpath("//input[@placeholder='Email']")).getAttribute("value"),
                     TestHelper.EMAIL);
             TestHelper.billingAccountManager(getDriver());
             getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-cancel-button']")).click();
+            WebElement paymentMethodRemoveButton=getDriver().findElement(By.xpath("//span[@class='jsx-844615980 th-card-last4']"));
+            assertTrue(paymentMethodRemoveButton.getText().endsWith(TestHelper.CREDIT_CARD_4LAST_DIGITS));
+            getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-action-button " +
+                    "th-cancel-button']")).click();
+            wait.until(ExpectedConditions.invisibilityOf(paymentMethodRemoveButton));
 
             //Go to Pricing Menu and verify The Pro plan is cancelled and user is on a Free plan
             TestHelper.selectPricing(getDriver());
             assertTrue(getDriver().findElement(By.xpath("//span[text()='You are free member now']")).isDisplayed());
         }
-        proPlanButton.click();
+
         WebElement iFramePayment = getDriver().findElement(By.xpath("//iframe[@title='Secure payment input frame']"));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFramePayment));
         Thread.sleep(2000);
@@ -82,7 +88,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         //wait.until(ExpectedConditions.textToBePresentInElement(proPlanButton,"Cancel"));
 
         //Go to Account --> Billing --> Cancel Plan --> Remove payment Method and Unsubscribe from Pro Plan
-        TestHelper.openUserProfile(getDriver());
+        TestHelper.profileDropMenu(getDriver());
         assertEquals(getDriver().findElement(By.xpath("//input[@placeholder='Email']")).getAttribute("value"),
                 TestHelper.EMAIL);
         TestHelper.billingAccountManager(getDriver());
@@ -96,5 +102,9 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         //Go to Pricing Menu and verify The Pro plan is cancelled and user is on a Free plan
         TestHelper.selectPricing(getDriver());
         assertTrue(getDriver().findElement(By.xpath("//span[text()='You are free member now']")).isDisplayed());
+
+        }
+
     }
-}
+
+
