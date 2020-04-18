@@ -19,4 +19,9 @@ public class UserHelper {
         driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(password);
         driver.findElement(By.xpath("//button[@class='MuiButtonBase-root th-button']")).click();
     }
+
+    public static void goToBilling(WebDriver driver) {
+        TestHelper.moveToElement(driver, By.xpath( "//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']"));
+        driver.findElement(By.xpath("//ul//a[text()='Billing']")).click();
+    }
 }

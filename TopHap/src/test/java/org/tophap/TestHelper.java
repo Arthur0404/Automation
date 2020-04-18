@@ -51,11 +51,11 @@ public class TestHelper {
         }
     }
 
-    public static final String CREDIT_CARD_4LAST_DIGITS = "1117";
-    public static String CREDIT_CARD = "601111111111" + CREDIT_CARD_4LAST_DIGITS;
+    public static final String CREDIT_CARD_4LAST_DIGITS = "4242";
+    public static String CREDIT_CARD = "424242424242" + CREDIT_CARD_4LAST_DIGITS;
     public static final String CREDIT_CARD_EXPIRATION = "12/50";
     public static final String CREDIT_CARD_CVV = "111";
-    public static final String CREDIT_CARD_PASSWORD = "111111";
+    public static final String ZIP_CODE = "111111";
 
     public static void enterCreditCardData(WebDriver driver, String card_number, String card_exp, String card_cvv, String card_pass) {
         driver.findElement(By.xpath("//*[@name='cardnumber']")).sendKeys(card_number);
@@ -64,24 +64,13 @@ public class TestHelper {
         driver.findElement(By.xpath("//*[@name='postal']")).sendKeys(card_pass);
     }
 
-    public static final String EMAIL = "0.7752235088120072+ta@example.com";
-    public static final String PASS = "111111";
-
     public static void signIn(WebDriver driver, String email, String pass) {
         driver.findElement(By.xpath("//a[@class='th-link ml-3']")).click();
-        driver.findElement(By.xpath("//input[@placeholder='E-mail']")).sendKeys(EMAIL);
-        driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(PASS);
+        driver.findElement(By.xpath("//input[@placeholder='E-mail']")).sendKeys(email);
+        driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(pass);
         driver.findElement(By.xpath("//*[@class='MuiButtonBase-root th-button']")).click();
     }
 
-    public static void profileDropMenu(WebDriver driver) {
-        driver.findElement(By.xpath("//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']")).click();
-        driver.findElement(By.linkText("Account")).click();
-    }
-
-    public static void billingAccountManager(WebDriver driver) {
-        driver.findElement(By.linkText("Billing")).click();
-    }
     public static ExpectedCondition<WebElement> movingIsFinished(final By locator) {
         return new ExpectedCondition<WebElement>() {
 
