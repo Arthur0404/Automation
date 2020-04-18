@@ -36,8 +36,8 @@ public class TestHelper {
         }
     }
 
-    public static final String CREDIT_CARD_4LAST_DIGITS = "4242";
-    public static String CREDIT_CARD = "424242424242" + CREDIT_CARD_4LAST_DIGITS;
+   // public static final String CREDIT_CARD_4LAST_DIGITS = "4242";
+    public static String CREDIT_CARD = "4242424242424242";
     public static final String CREDIT_CARD_EXPIRATION = "12/50";
     public static final String CREDIT_CARD_CVV = "111";
     public static final String ZIP_CODE = "111111";
