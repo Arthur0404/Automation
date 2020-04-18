@@ -75,10 +75,13 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         UserHelper.goToBilling(getDriver());
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-cancel-button']")).click();
         WebElement paymentMethodRemoveButton=getDriver().findElement(By.xpath("//span[@class='jsx-844615980 th-card-last4']"));
-        //assertTrue(paymentMethodRemoveButton.getText().endsWith(TestHelper.CREDIT_CARD_4LAST_DIGITS));
+        assertTrue(paymentMethodRemoveButton.getText().endsWith(TestHelper.CREDIT_CARD_4LAST_DIGITS));
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-action-button " +
                 "th-cancel-button']")).click();
-        wait.until(ExpectedConditions.invisibilityOf(paymentMethodRemoveButton));
+        wait.until(ExpectedConditions.visibilityOf(getDriver().findElement
+                (By.xpath("//button[@class='MuiButtonBase-root th-button th-add-method-button']"))));
+
+        //wait.until(ExpectedConditions.invisibilityOf(paymentMethodRemoveButton));
 
         //Go to Pricing Menu and verify The Pro plan is cancelled and user is on a Free plan
         TestHelper.selectPricing(getDriver());
