@@ -21,12 +21,12 @@ public class UserHelper {
         driver.findElement(By.xpath("//button[@class='MuiButtonBase-root th-button']")).click();
     }
     public static void logout(WebDriver driver) {
-        TestHelper.moveToElement(driver, By.className("UserAvatar--inner"));
+        TestHelper.moveToElement(driver, By.xpath( "//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']"));
         driver.findElement(By.xpath("//li[text()='Sign Out']")).click();
     }
 
     public static void openUserProfile(WebDriver driver) {
-        TestHelper.moveToElement(driver, By.className("UserAvatar--inner"));
+        TestHelper.moveToElement(driver, By.xpath( "//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']"));
         driver.findElement(By.linkText("Account")).click();
     }
 
