@@ -23,7 +23,7 @@ public class CreateAccountNegativeTest extends SingleTest {
         // populate Sign up form (Name field leave empty) and Submit
         getDriver().findElement(By.xpath("//input[@placeholder='Email']"))
                 .sendKeys("qualityA2019+TA" + Math.round(Math.random()*1000) + "@gmail.com");
-        getDriver().findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(TestHelper.PASSWORD);
+        getDriver().findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(UserHelper.PASSWORD);
         getDriver().findElement(By.xpath("//button[@type='submit']")).click();
 
         // verify the Name field is mandatory and that you are left of the Sign up form
