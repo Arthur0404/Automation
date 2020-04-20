@@ -45,7 +45,7 @@ public class HoverOverTest extends SingleTest {
     @Test
     void hoverOverTest() throws InterruptedException {
 
-        TestHelper.loginTheSite(getDriver());
+        UserHelper.tryForFreeFromHomePage(getDriver());
 
         for (int i = 0; i < BUTTONS_NAMES.length; i++) {
             TestHelper.moveToHiddenElement(getDriver(), By.xpath(

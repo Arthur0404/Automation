@@ -20,7 +20,7 @@ public class CreateFreeAccountTest extends SingleTest {
         // open Sign up form from the Home page and sign up
         getDriver().get("https://next.tophap.com/");
         getDriver().manage().window().maximize();
-        TestHelper.signUp(getDriver(), TestHelper.NAME, "qualityA2019+TA" + Math.round(Math.random()*1000) + "@gmail.com", TestHelper.PASSWORD);
+        UserHelper.signUp(getDriver(), UserHelper.NAME, "qualityA2019+TA" + Math.round(Math.random()*1000) + "@gmail.com", UserHelper.PASSWORD);
 
         // verify confirmation modal window is displayed and has correct information
         assertTrue(getDriver().findElement(By.className("th-authentication-modal")).isDisplayed());
@@ -30,7 +30,7 @@ public class CreateFreeAccountTest extends SingleTest {
         getDriver().findElement(By.xpath("//button[text()='OK']")).click();
 
         // verify that you are automatically logged in (avatar name on the screen equals name)
-        assertEquals(TestHelper.NAME, getDriver().findElement(By.xpath("//div[contains(@class,'UserAvatar')]")).getAttribute("aria-label"));
+        assertEquals(UserHelper.NAME, getDriver().findElement(By.xpath("//div[contains(@class,'UserAvatar')]")).getAttribute("aria-label"));
         getDriver().navigate().refresh();
         TestHelper.closeWelcome(getDriver());
 

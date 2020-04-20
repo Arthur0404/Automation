@@ -16,32 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestHelper {
 
-    public static final String NAME = "TopHap";
-    public static final String PASSWORD = "TopHap";
-
-    public static void loginTheSite(WebDriver driver) {
-        driver.get("https://next.tophap.com/");
-        driver.findElement(By.xpath("//button[text()='Try for Free']")).click();
-
-        closeWelcome(driver);
-    }
-
-    public static void selectPricing(WebDriver driver) {
-        driver.findElement(By.linkText("Pricing")).click();
-    }
-
-    public static void signUp(WebDriver driver, String name, String email, String pass) throws InterruptedException {
-        // open Sign up form from the Home page
-        driver.findElement(By.className("th-signup-button")).click();
-        // verify you are on the Sign up form
-        assertEquals("Sign Up for Free", driver.findElement(By.xpath("//div[@role='dialog']//h1")).getText());
-        // populate Sign up form and Submit
-        driver.findElement(By.xpath("//input[@placeholder='Name']")).sendKeys(name);
-        driver.findElement(By.xpath("//input[@placeholder='Email']")).sendKeys(email);
-        driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(pass);
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
-    }
-
     public static void closeWelcome(WebDriver drive) {
         List<WebElement> frames = drive.findElements(By.xpath("//iframe[@title='Intercom Live Chat']"));
         if (frames.size() > 0) {
@@ -51,37 +25,6 @@ public class TestHelper {
         }
     }
 
-    public static final String CREDIT_CARD_4LAST_DIGITS = "1117";
-    public static String CREDIT_CARD = "601111111111" + CREDIT_CARD_4LAST_DIGITS;
-    public static final String CREDIT_CARD_EXPIRATION = "12/50";
-    public static final String CREDIT_CARD_CVV = "111";
-    public static final String CREDIT_CARD_PASSWORD = "111111";
-
-    public static void enterCreditCardData(WebDriver driver, String card_number, String card_exp, String card_cvv, String card_pass) {
-        driver.findElement(By.xpath("//*[@name='cardnumber']")).sendKeys(card_number);
-        driver.findElement(By.xpath("//*[@name='exp-date']")).sendKeys(card_exp);
-        driver.findElement(By.xpath("//*[@name='cvc']")).sendKeys(card_cvv);
-        driver.findElement(By.xpath("//*[@name='postal']")).sendKeys(card_pass);
-    }
-
-    public static final String EMAIL = "0.7752235088120072+ta@example.com";
-    public static final String PASS = "111111";
-
-    public static void signIn(WebDriver driver, String email, String pass) {
-        driver.findElement(By.xpath("//a[@class='th-link ml-3']")).click();
-        driver.findElement(By.xpath("//input[@placeholder='E-mail']")).sendKeys(EMAIL);
-        driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(PASS);
-        driver.findElement(By.xpath("//*[@class='MuiButtonBase-root th-button']")).click();
-    }
-
-    public static void profileDropMenu(WebDriver driver) {
-        driver.findElement(By.xpath("//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']")).click();
-        driver.findElement(By.linkText("Account")).click();
-    }
-
-    public static void billingAccountManager(WebDriver driver) {
-        driver.findElement(By.linkText("Billing")).click();
-    }
     public static ExpectedCondition<WebElement> movingIsFinished(final By locator) {
         return new ExpectedCondition<WebElement>() {
 
@@ -125,19 +68,6 @@ public class TestHelper {
         moveToElement(driver, driver.findElement(locator));
     }
 
-    public static void openUserProfile(WebDriver driver) {
-        TestHelper.moveToElement(driver, By.className("UserAvatar--inner"));
-        driver.findElement(By.linkText("Account")).click();
-    }
-
-    public static void emailConfirmationFailureMsgClose(WebDriver driver){
-            WebElement waitForSignUpWindow = new WebDriverWait(driver, 10).until(TestHelper.movingIsFinished(
-                    By.xpath("//div[@class='Toastify__toast-container Toastify__toast-container--top-right th-notification-container']")));
-            driver.findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-close-button']")).click();
-
-        }
-
-
     public static void moveToHiddenElement(WebDriver driver, By locator, By locatorDropDown) throws InterruptedException {
         Actions action = new Actions(driver);
         WebElement button = driver.findElement(locator);
@@ -150,4 +80,29 @@ public class TestHelper {
                     new WebDriverWait(driver, 10).until(movingIsFinished(locator)));
         }
     }
+
+    public static void selectPricing(WebDriver driver) {
+        driver.findElement(By.linkText("Pricing")).click();
+    }
+
+    public static void loginFromSignupPage(WebDriver driver, String email, String pass) {
+        driver.findElement(By.xpath("//a[@class='th-link ml-3']")).click();
+        driver.findElement(By.xpath("//input[@placeholder='E-mail']")).sendKeys(email);
+        driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(pass);
+        driver.findElement(By.xpath("//*[@class='MuiButtonBase-root th-button']")).click();
+    }
+
+    public static final String CREDIT_CARD_4LAST_DIGITS = "1117";
+    public static String CREDIT_CARD = "601111111111" + CREDIT_CARD_4LAST_DIGITS;
+    public static final String CREDIT_CARD_EXPIRATION = "12/50";
+    public static final String CREDIT_CARD_CVV = "111";
+    public static final String POSTAL_CODE = "11111";
+
+    public static void enterCreditCardData(WebDriver driver, String card_number, String card_exp, String card_cvv, String postalCode) {
+        driver.findElement(By.xpath("//*[@name='cardnumber']")).sendKeys(card_number);
+        driver.findElement(By.xpath("//*[@name='exp-date']")).sendKeys(card_exp);
+        driver.findElement(By.xpath("//*[@name='cvc']")).sendKeys(card_cvv);
+        driver.findElement(By.xpath("//*[@name='postal']")).sendKeys(postalCode);
+    }
+
 }
