@@ -1,11 +1,16 @@
 package org.tophap;
+
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.tophap.runner.SingleTest;
+
 import java.util.*;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 public class PricingProAnnualUnsignedTest extends SingleTest {
 
     @Test
@@ -16,21 +21,21 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         WebDriverWait wait = new WebDriverWait(getDriver(), 10);
         //Go to Home --> Pricing Page
         getDriver().get("https://next.tophap.com/");
-        getDriver().manage().window().maximize();
+        //getDriver().manage().window().maximize();
         TestHelper.selectPricing(getDriver());
         //List of 4 Plans to check the presence and titles
-        final String[] PLANS = {
-                "Free",
-                "Pro",
-                "Advanced",
-                "Enterprise"
-        };
-        List<WebElement> pricePlans = getDriver().findElements(By.xpath("//h5"));
-        int i = 0;
-        for (String el : PLANS) {
-            assertEquals(el, pricePlans.get(i).getText());
-            i++;
-        }
+//        final String[] PLANS = {
+//                "Free",
+//                "Pro",
+//                "Advanced",
+//                "Enterprise"
+//        };
+//        List<WebElement> pricePlans = getDriver().findElements(By.xpath("//h5"));
+//        int i = 0;
+//        for (String el : PLANS) {
+//            assertEquals(el, pricePlans.get(i).getText());
+//            i++;
+//        }
         //Annual plan pre-selected by default with $45 per month on Pro plan
         WebElement annualBill18 = getDriver().findElement(By.xpath("//div[@class='th-period-picker']/button[1]"));
         assertTrue(annualBill18.getAttribute("class").contains("selected"));
@@ -76,7 +81,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         //TestHelper.billingAccountManager(getDriver());
         UserHelper.goToBilling(getDriver());
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-cancel-button']")).click();
-        WebElement paymentMethodRemoveButton=getDriver().findElement(By.xpath("//span[@class='jsx-844615980 th-card-last4']"));
+        WebElement paymentMethodRemoveButton = getDriver().findElement(By.xpath("//span[@class='jsx-844615980 th-card-last4']"));
         assertTrue(paymentMethodRemoveButton.getText().endsWith(TestHelper.CREDIT_CARD_4LAST_DIGITS));
         getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-action-button " +
                 "th-cancel-button']")).click();
@@ -85,6 +90,7 @@ public class PricingProAnnualUnsignedTest extends SingleTest {
         //maybe better? wait.until(ExpectedConditions.visibilityOf(getDriver().findElement(By.xpath("//button[@class='MuiButtonBase-root th-button th-add-method-button']"))));
         //Go to Pricing Menu and verify The Pro plan is cancelled and user is on a Free plan
         TestHelper.selectPricing(getDriver());
-        assertTrue(getDriver().findElement(By.xpath("//span[text()='You are free member now']")).isDisplayed());
+        //assertTrue(getDriver().findElement(By.xpath("//span[text()='You are free member now']")).isDisplayed());
+        assertEquals("Get Started", getDriver().findElement(By.xpath("//*[@class='MuiButtonBase-root th-button th-select-button']")).getText());
     }
 }
