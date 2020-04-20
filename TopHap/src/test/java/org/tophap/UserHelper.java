@@ -6,11 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
 
 public class UserHelper {
 
-    public static final String EMAIL = "qualitya2019+ta1@gmail.com";
+    public static final String EMAIL = "qualityA2019+TA1@gmail.com";
     public static final String PASSWORD = "TopHap";
     public static final String NAME = "TopHap";
 
@@ -25,7 +25,7 @@ public class UserHelper {
         // open Sign up form from the Home page
         driver.findElement(By.className("th-signup-button")).click();
         // verify you are on the Sign up form
-        assertEquals("Sign Up for Free", driver.findElement(By.xpath("//div[@role='dialog']//h1")).getText());
+        //assertEquals("Sign Up for Free", driver.findElement(By.xpath("//div[@role='dialog']//h1")).getText());
         // populate Sign up form and Submit
         driver.findElement(By.xpath("//input[@placeholder='Name']")).sendKeys(name);
         driver.findElement(By.xpath("//input[@placeholder='Email']")).sendKeys(email);
@@ -48,6 +48,11 @@ public class UserHelper {
     public static void openUserProfile(WebDriver driver) {
         TestHelper.moveToElement(driver, By.xpath( "//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']"));
         driver.findElement(By.linkText("Account")).click();
+    }
+
+    public static void goToBilling(WebDriver driver) {
+        TestHelper.moveToElement(driver, By.xpath( "//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']"));
+        driver.findElement(By.xpath("//ul//a[text()='Billing']")).click();
     }
 
     public static void emailConfirmationFailureMsgClose(WebDriver driver) {
