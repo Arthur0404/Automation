@@ -50,11 +50,6 @@ public class UserHelper {
         driver.findElement(By.linkText("Account")).click();
     }
 
-    public static void goToBilling(WebDriver driver) {
-        TestHelper.moveToElement(driver, By.xpath( "//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']"));
-        driver.findElement(By.xpath("//ul//a[text()='Billing']")).click();
-    }
-
     public static void emailConfirmationFailureMsgClose(WebDriver driver) {
         WebElement waitForSignUpWindow = new WebDriverWait(driver, 10).until(TestHelper.movingIsFinished(
                 By.xpath("//div[@class='Toastify__toast-container Toastify__toast-container--top-right th-notification-container']")));
