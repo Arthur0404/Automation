@@ -1,14 +1,18 @@
 package org.tophap;
 
+import com.sun.glass.events.KeyEvent;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tophap.runner.MultipleTest;
+
+import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -71,19 +75,18 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(NAME, nameField.getAttribute("value"));
     }
 
-    @Disabled
     @Test
-    void changeAccountPhotoTest() throws InterruptedException {
-
-        //WebElement upload = getDriver().findElement(By.cssSelector(".th-button.th-avatar-wrapper"));
-        //upload.sendKeys("C:\\Users\\anna_\\Downloads\\test.jpg");
+    void changeAccountPhotoTest() throws InterruptedException, AWTException {
 
         getDriver().findElement(By.cssSelector(".th-button.th-avatar-wrapper")).click();
-        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
-        wait.until(ExpectedConditions.alertIsPresent());
-        WebElement frame = getDriver().switchTo().activeElement();
+        //WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        //wait.until(ExpectedConditions.alertIsPresent());
         Thread.sleep(2000);
-        frame.sendKeys("C:\\Users\\anna_\\Downloads\\test.jpg");
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_A+1);
+        robot.keyRelease(KeyEvent.VK_A+1);
+//        WebElement frame = getDriver().switchTo().activeElement();
+       // frame.sendKeys("C:\\Users\\anna_\\Downloads\\test.jpg");
     }
 
     @AfterEach
