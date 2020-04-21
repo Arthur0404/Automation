@@ -10,7 +10,11 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -78,6 +82,59 @@ public class TestHelper {
             action.moveToElement(buttonDropDown).perform();
             moveToElement(driver,
                     new WebDriverWait(driver, 10).until(movingIsFinished(locator)));
+        }
+    }
+
+    private static class Key {
+        int code;
+        boolean shift;
+
+        public Key(int code, boolean shift) {
+            this.code = code;
+            this.shift = shift;
+        }
+    }
+
+    private static Map<Character, Key> characterMap;
+    static {
+         characterMap = new HashMap<>();
+         characterMap.put(':', new Key(KeyEvent.VK_SEMICOLON, true));
+         characterMap.put('_', new Key(KeyEvent.VK_MINUS, true));
+    }
+
+    public static void sendKeys(String str) {
+        try {
+            Robot robot = new Robot();
+            for (int i = 0; i < str.length(); i++) {
+                char ch = str.charAt(i);
+
+                int code = ch;
+                boolean shift = false;
+
+                if (Character.isAlphabetic(ch)) {
+                    code = KeyEvent.getExtendedKeyCodeForChar(ch);
+                    shift = Character.isUpperCase(ch);
+                } else {
+                    Key key = characterMap.get(ch);
+                    if (key != null) {
+                        code = key.code;
+                        shift = key.shift;
+                    }
+                }
+
+                if (shift) {
+                    robot.keyPress(KeyEvent.VK_SHIFT);
+                }
+
+                robot.keyPress(code);
+                robot.keyRelease(code);
+
+                if (shift) {
+                    robot.keyRelease(KeyEvent.VK_SHIFT);
+                }
+            }
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
         }
     }
 }

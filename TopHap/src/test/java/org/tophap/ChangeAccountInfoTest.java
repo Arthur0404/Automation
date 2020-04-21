@@ -83,11 +83,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
         //WebDriverWait wait = new WebDriverWait(getDriver(), 10);
         //wait.until(ExpectedConditions.alertIsPresent());
         Thread.sleep(2000);
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_A+1);
-        robot.keyRelease(KeyEvent.VK_A+1);
-//        WebElement frame = getDriver().switchTo().activeElement();
-       // frame.sendKeys("C:\\Users\\anna_\\Downloads\\test.jpg");
+        TestHelper.sendKeys("https://qph.fs.quoracdn.net/main-qimg-c3c2ffa630f2950492a0ef7ef06737cc\n");
     }
 
     @AfterEach
