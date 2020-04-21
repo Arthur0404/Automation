@@ -2,9 +2,12 @@ package org.tophap;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tophap.runner.MultipleTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ChangeAccountInfoTest extends MultipleTest {
 
     private static final By LOGO_LOCATOR = By.xpath("//a[@class='th-logo']");
-    private static final String PHONE_NUMBER = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-    private static final String NAME = String.format("TestTest%s", Math.round(Math.random()*100));
 
     @BeforeEach
     private void setUp() throws InterruptedException {
@@ -30,8 +31,11 @@ public class ChangeAccountInfoTest extends MultipleTest {
         UserHelper.openUserProfile(getDriver());
     }
 
+    @Disabled
     @Test
     void changeAccountPhoneTest() throws InterruptedException {
+
+        final String PHONE_NUMBER = String.valueOf(System.currentTimeMillis()).substring(0, 10);
 
         // Update phone number
         By phoneNumberLocator = By.xpath("//input[@placeholder='Phone Number']");
@@ -47,8 +51,11 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(PHONE_NUMBER, phoneNumberField.getAttribute("value"));
     }
 
+    @Disabled
     @Test
     void changeAccountNameTest() throws InterruptedException {
+
+        final String NAME = String.format("TestTest%s", Math.round(Math.random()*100));
 
         // Update name
         By nameLocator = By.xpath("//input[@placeholder='Name']");
@@ -62,6 +69,21 @@ public class ChangeAccountInfoTest extends MultipleTest {
         UserHelper.openUserProfile(getDriver());
         nameField = getDriver().findElement(nameLocator);
         assertEquals(NAME, nameField.getAttribute("value"));
+    }
+
+    @Disabled
+    @Test
+    void changeAccountPhotoTest() throws InterruptedException {
+
+        //WebElement upload = getDriver().findElement(By.cssSelector(".th-button.th-avatar-wrapper"));
+        //upload.sendKeys("C:\\Users\\anna_\\Downloads\\test.jpg");
+
+        getDriver().findElement(By.cssSelector(".th-button.th-avatar-wrapper")).click();
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        wait.until(ExpectedConditions.alertIsPresent());
+        WebElement frame = getDriver().switchTo().activeElement();
+        Thread.sleep(2000);
+        frame.sendKeys("C:\\Users\\anna_\\Downloads\\test.jpg");
     }
 
     @AfterEach
