@@ -75,6 +75,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(NAME, nameField.getAttribute("value"));
     }
 
+    @Disabled
     @Test
     void changeAccountPhotoTest() throws InterruptedException, AWTException {
 
