@@ -75,7 +75,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(NAME, nameField.getAttribute("value"));
     }
 
-    @Disabled
+
     @Test
     void changeAccountPhotoTest() throws InterruptedException, AWTException {
 
@@ -84,6 +84,9 @@ public class ChangeAccountInfoTest extends MultipleTest {
         //wait.until(ExpectedConditions.alertIsPresent());
         Thread.sleep(2000);
         TestHelper.sendKeys("https://qph.fs.quoracdn.net/main-qimg-c3c2ffa630f2950492a0ef7ef06737cc\n");
+        Thread.sleep(3000);
+        getDriver().findElement(By.cssSelector(".MuiButtonBase-root.th-button.th-select-button")).click();
+        Thread.sleep(2000);
     }
 
     @AfterEach
