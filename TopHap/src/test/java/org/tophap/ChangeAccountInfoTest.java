@@ -32,6 +32,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
         UserHelper.openUserProfile(getDriver());
     }
 
+    @Disabled
     @Test
     void changeAccountPhoneTest() throws InterruptedException {
 
@@ -51,6 +52,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(PHONE_NUMBER, phoneNumberField.getAttribute("value"));
     }
 
+    @Disabled
     @Test
     void changeAccountNameTest() throws InterruptedException {
 
@@ -70,7 +72,6 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(NAME, nameField.getAttribute("value"));
     }
 
-    @Disabled
     @Test
     void changeAccountPhotoTest() throws InterruptedException, AWTException {
 
@@ -78,7 +79,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
         // Update photo
         getDriver().findElement(By.cssSelector(".th-button.th-avatar-wrapper")).click();
-        Thread.sleep(500);
+        Thread.sleep(1000);
         TestHelper.sendKeys("https://qph.fs.quoracdn.net/main-qimg-c3c2ffa630f2950492a0ef7ef06737cc\n");
         getDriver().findElement(By.cssSelector(".MuiButtonBase-root.th-button.th-select-button")).click();
         getDriver().findElement(By.xpath("//button[@type='submit']")).click();
