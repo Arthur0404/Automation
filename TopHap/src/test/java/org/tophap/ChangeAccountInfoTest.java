@@ -6,15 +6,12 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tophap.runner.MultipleTest;
 
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.tophap.TestHelper.moveToElement;
-import static org.tophap.TestHelper.movingIsFinished;
 
 public class ChangeAccountInfoTest extends MultipleTest {
 
@@ -73,6 +70,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(NAME, nameField.getAttribute("value"));
     }
 
+    @Disabled
     @Test
     void changeAccountPhotoTest() throws InterruptedException, AWTException {
 
