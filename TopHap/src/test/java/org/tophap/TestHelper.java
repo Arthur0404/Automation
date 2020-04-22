@@ -137,4 +137,15 @@ public class TestHelper {
             throw new RuntimeException(e);
         }
     }
+
+    public static String getResourcesPath() {
+        String result = TestHelper.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+
+        // windows
+        if (result.charAt(2) == ':' && result.charAt(0) == '/') {
+            result = result.substring(1);
+        }
+
+        return result;
+    }
 }

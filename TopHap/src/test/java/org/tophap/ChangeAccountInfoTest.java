@@ -78,9 +78,12 @@ public class ChangeAccountInfoTest extends MultipleTest {
         final String originalImageSource = getDriver().findElement(By.xpath("//button//img")).getAttribute("src");
 
         // Update photo
-        getDriver().findElement(By.cssSelector(".th-button.th-avatar-wrapper")).click();
-        Thread.sleep(1000);
-        TestHelper.sendKeys("https://qph.fs.quoracdn.net/main-qimg-c3c2ffa630f2950492a0ef7ef06737cc\n");
+        getDriver().findElement(By.xpath("//input[@type='file']")).sendKeys(TestHelper.getResourcesPath() + "img.png");
+
+        //getDriver().findElement(By.cssSelector(".th-button.th-avatar-wrapper")).click();
+        //Thread.sleep(1000);
+        //TestHelper.sendKeys("https://qph.fs.quoracdn.net/main-qimg-c3c2ffa630f2950492a0ef7ef06737cc\n");
+
         getDriver().findElement(By.cssSelector(".MuiButtonBase-root.th-button.th-select-button")).click();
         getDriver().findElement(By.xpath("//button[@type='submit']")).click();
         WebElement wait = new WebDriverWait(getDriver(), 10)
