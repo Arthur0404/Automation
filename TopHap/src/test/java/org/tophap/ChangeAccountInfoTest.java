@@ -1,10 +1,9 @@
 package org.tophap;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import pages.ProfilePage;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.tophap.runner.MultipleTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,11 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ChangeAccountInfoTest extends MultipleTest {
 
     private static final By LOGO_LOCATOR = By.xpath("//a[@class='th-logo']");
-    private static final String PHONE_NUMBER = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-    private static final String NAME = String.format("TestTest%s", Math.round(Math.random()*100));
 
-    @BeforeEach
-    private void setUp() throws InterruptedException {
+    @Order(1)
+    @Test
+    void setUp() throws InterruptedException {
 
         // Open sign in form from the Home page and login
         getDriver().get("https://next.tophap.com/");
@@ -30,42 +28,65 @@ public class ChangeAccountInfoTest extends MultipleTest {
         UserHelper.openUserProfile(getDriver());
     }
 
+    @Order(2)
     @Test
     void changeAccountPhoneTest() throws InterruptedException {
 
+        final String PHONE_NUMBER = String.valueOf(System.currentTimeMillis()).substring(0, 10);
         // Update phone number
-        By phoneNumberLocator = By.xpath("//input[@placeholder='Phone Number']");
-        WebElement phoneNumberField = getDriver().findElement(phoneNumberLocator);
-        phoneNumberField.clear();
-        phoneNumberField.sendKeys(PHONE_NUMBER);
-        getDriver().findElement(By.xpath("//button[@type='submit']")).click();
+        ProfilePage profilePage = new ProfilePage(getDriver());
+        profilePage.populatePhoneNumberField(PHONE_NUMBER);
+        profilePage.submitButtonClick();
 
-        // Verify that phone number is updated
+        // Go to HomePage and come back to ProfilePage
         getDriver().findElement(LOGO_LOCATOR).click();
         UserHelper.openUserProfile(getDriver());
-        phoneNumberField = getDriver().findElement(phoneNumberLocator);
-        assertEquals(PHONE_NUMBER, phoneNumberField.getAttribute("value"));
+
+        // Verify that phone number is updated
+        assertEquals(PHONE_NUMBER, profilePage.getPhoneNumber());
     }
 
+    @Order(3)
     @Test
     void changeAccountNameTest() throws InterruptedException {
 
-        // Update name
-        By nameLocator = By.xpath("//input[@placeholder='Name']");
-        WebElement nameField = getDriver().findElement(nameLocator);
-        nameField.clear();
-        nameField.sendKeys(NAME);
-        getDriver().findElement(By.xpath("//button[@type='submit']")).click();
+        final String NAME = String.format("TestTest%s", Math.round(Math.random()*100));
 
-        // Verify that name is updated
+        // Update name
+        ProfilePage profilePage = new ProfilePage(getDriver());
+        profilePage.populateNameField(NAME);
+        profilePage.submitButtonClick();
+
+        // Go to HomePage and come back to ProfilePage
         getDriver().findElement(LOGO_LOCATOR).click();
         UserHelper.openUserProfile(getDriver());
-        nameField = getDriver().findElement(nameLocator);
-        assertEquals(NAME, nameField.getAttribute("value"));
+
+        // Verify that name is updated
+        assertEquals(NAME, profilePage.getName());
     }
 
-    @AfterEach
-    public void setDown() {
+    @Order(4)
+    @Test
+    void changeUserNameTest() throws InterruptedException {
+
+        final String USER_NAME = String.format("TestTest%s", Math.round(Math.random()*100));
+
+        // Update username
+        ProfilePage profilePage = new ProfilePage(getDriver());
+        profilePage.populateUserNameField(USER_NAME);
+        profilePage.submitButtonClick();
+
+        // Go to HomePage and come back to ProfilePage
+        getDriver().findElement(LOGO_LOCATOR).click();
+        UserHelper.openUserProfile(getDriver());
+
+        // Verify that username is updated
+        assertEquals(USER_NAME, profilePage.getUserName());
+    }
+
+    @Order(5)
+    @Test
+  void setDown() {
         UserHelper.logout(getDriver());
     }
 }
