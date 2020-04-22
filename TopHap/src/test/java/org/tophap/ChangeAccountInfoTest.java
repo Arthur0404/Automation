@@ -1,11 +1,9 @@
 package org.tophap;
 
-import com.sun.glass.events.KeyEvent;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,7 +12,9 @@ import org.tophap.runner.MultipleTest;
 
 import java.awt.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.tophap.TestHelper.moveToElement;
+import static org.tophap.TestHelper.movingIsFinished;
 
 public class ChangeAccountInfoTest extends MultipleTest {
 
@@ -35,7 +35,6 @@ public class ChangeAccountInfoTest extends MultipleTest {
         UserHelper.openUserProfile(getDriver());
     }
 
-    @Disabled
     @Test
     void changeAccountPhoneTest() throws InterruptedException {
 
@@ -55,7 +54,6 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(PHONE_NUMBER, phoneNumberField.getAttribute("value"));
     }
 
-    @Disabled
     @Test
     void changeAccountNameTest() throws InterruptedException {
 
@@ -75,18 +73,21 @@ public class ChangeAccountInfoTest extends MultipleTest {
         assertEquals(NAME, nameField.getAttribute("value"));
     }
 
-
     @Test
     void changeAccountPhotoTest() throws InterruptedException, AWTException {
 
+        final String originalImageSource = getDriver().findElement(By.xpath("//button//img")).getAttribute("src");
+
+        // Update photo
         getDriver().findElement(By.cssSelector(".th-button.th-avatar-wrapper")).click();
-        //WebDriverWait wait = new WebDriverWait(getDriver(), 10);
-        //wait.until(ExpectedConditions.alertIsPresent());
-        Thread.sleep(2000);
+        Thread.sleep(500);
         TestHelper.sendKeys("https://qph.fs.quoracdn.net/main-qimg-c3c2ffa630f2950492a0ef7ef06737cc\n");
-        Thread.sleep(3000);
         getDriver().findElement(By.cssSelector(".MuiButtonBase-root.th-button.th-select-button")).click();
-        Thread.sleep(2000);
+        getDriver().findElement(By.xpath("//button[@type='submit']")).click();
+        WebElement wait = new WebDriverWait(getDriver(), 10)
+                .until(TestHelper.movingIsFinished(By.xpath("//button//img[contains(@src,'https')]")));
+        // Verify that there is a new photo on a profile
+        assertNotEquals(originalImageSource, getDriver().findElement(By.xpath("//button//img")).getAttribute("src"));
     }
 
     @AfterEach
