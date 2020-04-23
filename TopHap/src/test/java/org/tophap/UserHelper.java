@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,16 +35,44 @@ public class UserHelper {
         driver.findElement(By.xpath("//button[@type='submit']")).click();
     }
 
-    public static void login(WebDriver driver, String email, String password) {
-        driver.findElement(By.xpath("//a[@class='th-signin-button']")).click();
-        driver.switchTo().activeElement();
-        driver.findElement(By.xpath( "//input[@placeholder='E-mail']")).sendKeys(email);
-        driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(password);
-        driver.findElement(By.xpath("//button[@class='MuiButtonBase-root th-button']")).click();
+    private static class Login {
+
+        @FindBy(xpath = "//a[@class='th-signin-button']")
+        public WebElement signInMenuButton;
+
+        @FindBy(xpath = "//input[@placeholder='E-mail']")
+        public WebElement emailField;
+
+        @FindBy(xpath = "//input[@placeholder='Password']")
+        public WebElement passwordField;
+
+        @FindBy(xpath = "//button[@class='MuiButtonBase-root th-button']")
+        public WebElement submitButton;
     }
+
+    public static void login(WebDriver driver, String email, String password) {
+        Login login = new Login();
+        PageFactory.initElements(driver, login);
+        login.signInMenuButton.click();
+        driver.switchTo().activeElement();
+        login.emailField.sendKeys(email);
+        login.passwordField.sendKeys(password);
+        login.submitButton.click();
+    }
+
+    private static class Logout {
+        @FindBy(xpath = "//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']")
+        public WebElement avatarMenuButton;
+
+        @FindBy(xpath = "//li[text()='Sign Out']")
+        public WebElement signOutButton;
+    }
+
     public static void logout(WebDriver driver) {
-        TestHelper.moveToElement(driver, By.xpath( "//div[@class='jsx-3275066862 th-menu-item th-avatar-wrapper']"));
-        driver.findElement(By.xpath("//li[text()='Sign Out']")).click();
+        Logout logout = new Logout();
+        PageFactory.initElements(driver, logout);
+        TestHelper.moveToElement(driver, logout.avatarMenuButton);
+        logout.signOutButton.click();
     }
 
     public static void openUserProfile(WebDriver driver) {

@@ -1,5 +1,6 @@
 package org.tophap;
 
+import pages.HomePage;
 import pages.ProfilePage;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
     void setUp() throws InterruptedException {
 
         // Open sign in form from the Home page and login
-        getDriver().get("https://next.tophap.com/");
-        getDriver().manage().window().maximize();
+        HomePage homePage = new HomePage(getDriver());
         UserHelper.login(getDriver(), UserHelper.EMAIL, UserHelper.PASSWORD);
 
         // Close email confirmation failure PopUp window
@@ -33,13 +33,13 @@ public class ChangeAccountInfoTest extends MultipleTest {
     void changeAccountPhoneTest() throws InterruptedException {
 
         final String PHONE_NUMBER = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-        // Update phone number
         ProfilePage profilePage = new ProfilePage(getDriver());
-        profilePage.populatePhoneNumberField(PHONE_NUMBER);
-        profilePage.submitButtonClick();
+
+        // Update phone number
+        profilePage.updatePhoneNumber(PHONE_NUMBER);
 
         // Go to HomePage and come back to ProfilePage
-        getDriver().findElement(LOGO_LOCATOR).click();
+        profilePage.goToHomePage();
         UserHelper.openUserProfile(getDriver());
 
         // Verify that phone number is updated
@@ -50,15 +50,14 @@ public class ChangeAccountInfoTest extends MultipleTest {
     @Test
     void changeAccountNameTest() throws InterruptedException {
 
-        final String NAME = String.format("TestTest%s", Math.round(Math.random()*100));
+        final String NAME = String.format("TestTest%s", Math.round(Math.random() * 100));
+        ProfilePage profilePage = new ProfilePage(getDriver());
 
         // Update name
-        ProfilePage profilePage = new ProfilePage(getDriver());
-        profilePage.populateNameField(NAME);
-        profilePage.submitButtonClick();
+        profilePage.updateName(NAME);
 
         // Go to HomePage and come back to ProfilePage
-        getDriver().findElement(LOGO_LOCATOR).click();
+        profilePage.goToHomePage();
         UserHelper.openUserProfile(getDriver());
 
         // Verify that name is updated
@@ -69,15 +68,14 @@ public class ChangeAccountInfoTest extends MultipleTest {
     @Test
     void changeUserNameTest() throws InterruptedException {
 
-        final String USER_NAME = String.format("TestTest%s", Math.round(Math.random()*100));
+        final String USER_NAME = String.format("TestTest%s", Math.round(Math.random() * 100));
+        ProfilePage profilePage = new ProfilePage(getDriver());
 
         // Update username
-        ProfilePage profilePage = new ProfilePage(getDriver());
-        profilePage.populateUserNameField(USER_NAME);
-        profilePage.submitButtonClick();
+        profilePage.updateUserName(USER_NAME);
 
         // Go to HomePage and come back to ProfilePage
-        getDriver().findElement(LOGO_LOCATOR).click();
+        profilePage.goToHomePage();
         UserHelper.openUserProfile(getDriver());
 
         // Verify that username is updated
@@ -86,7 +84,25 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
     @Order(5)
     @Test
-  void setDown() {
+    void changeEmailFailureTest() throws InterruptedException {
+
+        final String NEW_EMAIL = "qualitya2019+ta2@gmail.com";
+        ProfilePage profilePage = new ProfilePage(getDriver());
+
+        // Attempt to update email
+        profilePage.updateEmail(NEW_EMAIL);
+
+        // Go to HomePage and come back to ProfilePage
+        profilePage.goToHomePage();
+        UserHelper.openUserProfile(getDriver());
+
+        // Verify that email is not updated
+        assertEquals(UserHelper.EMAIL, profilePage.getEmail());
+    }
+
+    @Order(6)
+    @Test
+    void setDown() {
         UserHelper.logout(getDriver());
     }
 }

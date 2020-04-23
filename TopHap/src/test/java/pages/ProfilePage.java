@@ -27,6 +27,9 @@ public class ProfilePage {
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement submitButton;
 
+    @FindBy(xpath = "//a[@class='th-logo']")
+    public WebElement siteLogo;
+
     public ProfilePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -39,24 +42,31 @@ public class ProfilePage {
         driver.get(URL);
     }
 
-    public void populateNameField(String name) {
+    public void goToHomePage() {
+        siteLogo.click();
+    }
+
+    public void updateName(String name) {
         nameField.clear();
         nameField.sendKeys(name);
+        submitButton.click();
     }
 
-    public void populateUserNameField(String userName) {
+    public void updateUserName(String userName) {
         usernameField.clear();
         usernameField.sendKeys(userName);
+        submitButton.click();
     }
 
-    public void populatePhoneNumberField(String phoneNumber) {
+    public void updatePhoneNumber(String phoneNumber) {
         phoneNumberField.clear();
         phoneNumberField.sendKeys(phoneNumber);
+        submitButton.click();
     }
 
-    public void populateEmailField(String email) {
-        emailField.clear();
+    public void updateEmail(String email) {
         emailField.sendKeys(email);
+        submitButton.click();
     }
 
     public String getName() {
