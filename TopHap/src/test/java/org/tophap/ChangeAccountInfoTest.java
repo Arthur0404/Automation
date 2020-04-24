@@ -1,6 +1,7 @@
 package org.tophap;
 
 import pages.HomePage;
+import pages.LoginPage;
 import pages.ProfilePage;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -19,13 +20,14 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
         // Open sign in form from the Home page and login
         HomePage homePage = new HomePage(getDriver());
-        UserHelper.login(getDriver(), UserHelper.EMAIL, UserHelper.PASSWORD);
+        LoginPage loginPage = new LoginPage(getDriver());
+        loginPage.login(getDriver(), loginPage.EMAIL, loginPage.PASSWORD);
 
         // Close email confirmation failure PopUp window
-        UserHelper.emailConfirmationFailureMsgClose(getDriver());
+        homePage.emailConfirmationFailureMsgClose(getDriver());
 
         // Go to My Account page
-        UserHelper.openUserProfile(getDriver());
+        loginPage.openUserProfile(getDriver());
     }
 
     @Order(2)
@@ -40,7 +42,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
         // Go to HomePage and come back to ProfilePage
         profilePage.goToHomePage();
-        UserHelper.openUserProfile(getDriver());
+        profilePage.openUserProfile(getDriver());
 
         // Verify that phone number is updated
         assertEquals(PHONE_NUMBER, profilePage.getPhoneNumber());
@@ -58,7 +60,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
         // Go to HomePage and come back to ProfilePage
         profilePage.goToHomePage();
-        UserHelper.openUserProfile(getDriver());
+        profilePage.openUserProfile(getDriver());
 
         // Verify that name is updated
         assertEquals(NAME, profilePage.getName());
@@ -76,7 +78,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
         // Go to HomePage and come back to ProfilePage
         profilePage.goToHomePage();
-        UserHelper.openUserProfile(getDriver());
+        profilePage.openUserProfile(getDriver());
 
         // Verify that username is updated
         assertEquals(USER_NAME, profilePage.getUserName());
@@ -94,15 +96,17 @@ public class ChangeAccountInfoTest extends MultipleTest {
 
         // Go to HomePage and come back to ProfilePage
         profilePage.goToHomePage();
-        UserHelper.openUserProfile(getDriver());
+        profilePage.openUserProfile(getDriver());
 
         // Verify that email is not updated
-        assertEquals(UserHelper.EMAIL, profilePage.getEmail());
+        LoginPage loginPage = new LoginPage(getDriver());
+        assertEquals(loginPage.EMAIL, profilePage.getEmail());
     }
 
     @Order(6)
     @Test
     void setDown() {
-        UserHelper.logout(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+        homePage.logout(getDriver());
     }
 }

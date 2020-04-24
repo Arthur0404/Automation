@@ -3,9 +3,8 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class ProfilePage {
+public class ProfilePage extends BasePage {
 
     private static final String URL = "https://next.tophap.com/settings/profile";
 
@@ -30,8 +29,14 @@ public class ProfilePage {
     @FindBy(xpath = "//a[@class='th-logo']")
     public WebElement siteLogo;
 
+    @FindBy(className = "th-close-account-button")
+    WebElement deleteAccountButton;
+
+    @FindBy(xpath = "//div[contains(@class,'th-alert-modal')]//button[contains(@class,'th-ok-action')]")
+    WebElement getDeleteAccOKButton;
+
     public ProfilePage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public void submitButtonClick() {
@@ -85,6 +90,9 @@ public class ProfilePage {
         return phoneNumberField.getAttribute("value");
     }
 
-
+    public void deleteAccount() {
+        deleteAccountButton.click();
+        getDeleteAccOKButton.click();
+    }
 }
 

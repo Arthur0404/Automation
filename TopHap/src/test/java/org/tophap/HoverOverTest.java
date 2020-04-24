@@ -3,6 +3,7 @@ package org.tophap;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.tophap.runner.SingleTest;
+import pages.HomePage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,10 +46,11 @@ public class HoverOverTest extends SingleTest {
     @Test
     void hoverOverTest() throws InterruptedException {
 
-        UserHelper.tryForFreeFromHomePage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+        homePage.tryForFreeStart(getDriver());
 
         for (int i = 0; i < BUTTONS_NAMES.length; i++) {
-            TestHelper.moveToHiddenElement(getDriver(), By.xpath(
+            homePage.moveToHiddenElement(getDriver(), By.xpath(
                     String.format("//span[text()='%s']", BUTTONS_NAMES[i])), By.className("th-more-container"));
             assertTrue(getDriver().findElement(By.xpath(String.format("//div[text()='%s']", HOOVER_OVER_TEXTS[i]))).isDisplayed());
         }

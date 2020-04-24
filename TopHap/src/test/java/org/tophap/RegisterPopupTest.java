@@ -2,7 +2,6 @@ package org.tophap;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.tophap.runner.SingleTest;
 import pages.HomePage;
 import pages.ProfilePage;
@@ -19,14 +18,14 @@ class RegisterPopupTest extends SingleTest {
         HomePage homePage = new HomePage(getDriver());
 
         // Avoiding popup window
-        TestHelper.closeWelcome(getDriver());
+        homePage.closeWelcome(getDriver());
 
         // New user registration
         homePage.openSignUpWindow();
         getDriver().switchTo().activeElement();
         SignUpPage signUpPage = new SignUpPage(getDriver());
         final String EMAIL_RANDOM = String.format("%sTA@example.com", Math.round(Math.random() * 100));
-        signUpPage.sighUp(UserHelper.NAME, EMAIL_RANDOM, UserHelper.PASSWORD);
+        signUpPage.signUp(signUpPage.NAME, EMAIL_RANDOM, signUpPage.PASSWORD);
 
         // Authentication Popup should appear
         assertTrue(signUpPage.authentication.isDisplayed());
@@ -37,13 +36,13 @@ class RegisterPopupTest extends SingleTest {
         // Go to HomePage and close email confirmation failure PopUp window
         ProfilePage profilePage = new ProfilePage(getDriver());
         profilePage.goToHomePage();
-        UserHelper.emailConfirmationFailureMsgClose(getDriver());
+        homePage.emailConfirmationFailureMsgClose(getDriver());
 
         // Go to My Account page
-        UserHelper.openUserProfile(getDriver());
+        homePage.openUserProfile(getDriver());
 
         //deleting the account
-        signUpPage.deleteAccount();
+        profilePage.deleteAccount();
         assertTrue(homePage.signUpButton.isDisplayed());
     }
 }

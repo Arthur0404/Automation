@@ -1,15 +1,13 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class SignUpPage {
+public class SignUpPage extends BasePage {
 
     @FindBy(xpath = "//div[@role='dialog']//h1")
     public WebElement signUpWindowHeading;
@@ -32,19 +30,13 @@ public class SignUpPage {
     @FindBy(xpath = "//div[@class='jsx-2476985185 th-authentication']")
     WebElement emailConfirmation;
 
-    @FindBy(className = "th-close-account-button")
-    WebElement deleteAccountButton;
-
-    @FindBy(xpath = "//div[contains(@class,'th-alert-modal')]//button[contains(@class,'th-ok-action')]")
-    WebElement getDeleteAccOKButton;
-
     @FindBys({
             @FindBy(xpath = "//input[@placeholder='Name' and @required]")
     })
     public List<WebElement> nameMandatoryIndicator;
 
     public SignUpPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public String getSignUpWindowHeading () {
@@ -57,7 +49,7 @@ public class SignUpPage {
         this.submitButton.click();
     }
 
-    public void sighUp( String name, String email, String password ){
+    public void signUp( String name, String email, String password ){
         nameField.sendKeys(name);
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
@@ -66,8 +58,4 @@ public class SignUpPage {
 
     public String emailConfirmationText() { return emailConfirmation.getText(); }
 
-    public void deleteAccount() {
-        deleteAccountButton.click();
-        getDeleteAccOKButton.click();
-    }
 }
