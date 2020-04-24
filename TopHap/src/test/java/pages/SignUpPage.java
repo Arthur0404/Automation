@@ -30,13 +30,22 @@ public class SignUpPage {
     public WebElement authentication;
 
     @FindBy(xpath = "//div[@class='jsx-2476985185 th-authentication']")
-    WebElement emailConfirmation;
+    public WebElement emailConfirmation;
 
-    @FindBy(className = "th-close-account-button")
-    WebElement deleteAccountButton;
+    @FindBy(xpath = "//h1[@class='mt-5 mb-4 th-signup-success-title']")
+    public WebElement welcomeHeading;
 
-    @FindBy(xpath = "//div[contains(@class,'th-alert-modal')]//button[contains(@class,'th-ok-action')]")
-    WebElement getDeleteAccOKButton;
+    @FindBy(xpath = "//button[text()='RESEND EMAIL']")
+    public WebElement welcomeResendEmailBtn;
+
+    @FindBy(xpath = "//button[text()='OK']")
+    public WebElement welcomeOkBtn;
+
+    @FindBy(className = "button.th-close-account-button") //todo: move to profile page
+    public WebElement deleteAccountButton;
+
+    @FindBy(xpath = "//button[contains(@class,'th-ok-action')]") //todo: move to profile page
+    public WebElement getDeleteAccOKButton;
 
     @FindBys({
             @FindBy(xpath = "//input[@placeholder='Name' and @required]")
@@ -66,6 +75,7 @@ public class SignUpPage {
 
     public String emailConfirmationText() { return emailConfirmation.getText(); }
 
+    //todo: move to profile page
     public void deleteAccount() {
         deleteAccountButton.click();
         getDeleteAccOKButton.click();

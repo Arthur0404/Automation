@@ -10,7 +10,7 @@ public class ProfilePage {
     private static final String URL = "https://next.tophap.com/settings/profile";
 
     @FindBy(css = ".th-button.th-avatar-wrapper")
-    public WebElement avatarPhoto;
+    public WebElement avatar;
 
     @FindBy(xpath = "//input[@placeholder='Name']")
     public WebElement nameField;
@@ -29,6 +29,12 @@ public class ProfilePage {
 
     @FindBy(xpath = "//a[@class='th-logo']")
     public WebElement siteLogo;
+
+    @FindBy(className = "button.th-close-account-button")
+    public WebElement deleteAccountButton;
+
+    @FindBy(xpath = "//button[contains(@class,'th-ok-action')]")
+    public WebElement getDeleteAccOKButton;
 
     public ProfilePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -67,6 +73,11 @@ public class ProfilePage {
     public void updateEmail(String email) {
         emailField.sendKeys(email);
         submitButton.click();
+    }
+
+    public void deleteAccount() {
+        deleteAccountButton.click();
+        getDeleteAccOKButton.click();
     }
 
     public String getName() {

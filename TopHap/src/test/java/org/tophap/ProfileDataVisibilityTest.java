@@ -34,6 +34,6 @@ public class ProfileDataVisibilityTest extends MultipleTest {
         assertTrue(profilePage.usernameField.isDisplayed());
         assertTrue(profilePage.phoneNumberField.isDisplayed());
         assertTrue(profilePage.emailField.isDisplayed());
-        assertTrue(profilePage.avatarPhoto.isDisplayed());
+        assertTrue(profilePage.avatar.isDisplayed());
     }
 }
