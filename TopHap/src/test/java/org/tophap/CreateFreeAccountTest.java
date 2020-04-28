@@ -26,7 +26,7 @@ public class CreateFreeAccountTest extends SingleTest {
         homePage.openSignUpWindow();
         getDriver().switchTo().activeElement();
         SignUpPage signUpPage = new SignUpPage(getDriver());
-        signUpPage.signUp(signUpPage.NAME, "qualityA2019+TA" + Math.round(Math.random()*1000) + "@gmail.com", signUpPage.PASSWORD);
+        signUpPage.signUp(UserHelper.NAME, "qualityA2019+TA" + Math.round(Math.random()*1000) + "@gmail.com", UserHelper.PASSWORD);
 
         // verify confirmation modal window is displayed and has correct information
         assertTrue(getDriver().findElement(By.className("th-authentication-modal")).isDisplayed());

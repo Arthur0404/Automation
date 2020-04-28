@@ -42,16 +42,13 @@ public class MapPage extends BasePage {
     public WebElement sortZABtn;
 
     @FindBy(xpath = "//button[text()='Price']")
-    public WebElement sortPriceBtn;
+    public WebElement selectPriceSorting;
 
     @FindBy(xpath = "//div[text()='Property Status']")
     public WebElement propertyStatusFilterMenu;
 
     @FindBy(xpath = "//label//span[text()='Active']")
     public WebElement activePropertyFilter;
-
-    @FindBy(xpath = "//div[2]/div[2]/label[1]/span[1]//input")
-    public WebElement activePropertyFilterCheckBox;
 
     @FindBys({
             @FindBy(className = "th-item-wrapper")
@@ -73,7 +70,7 @@ public class MapPage extends BasePage {
         clearFilterBtns.get(0).click();
     }
 
-    public void clearOldSearchAndFilterRecords(WebDriver driver) {
+    public void clearOldSearchAndFilterRecords() {
         if (this.clearSeachBtns.size() > 0) {
             this.clearSearchField();
         }
@@ -82,57 +79,22 @@ public class MapPage extends BasePage {
         }
     }
 
-    public void submitSearch(WebDriver driver, String postalCode) throws InterruptedException {
+    public void submitSearch(String postalCode) throws InterruptedException {
         this.searchInputField.sendKeys(postalCode);
         Thread.sleep(2000);
         this.searchButton.click();
     }
 
-    public void openSortMenu() {
-        this.sortMenu.click();
-    }
-
-    public void selectAZorZASorting(WebElement order) {
-        order.click();
-    }
-
-    public void selectPriceSorting() {
-        this.sortPriceBtn.click();
-    }
-
-    public void openPropertyStatusFilterMenu() {
-        this.propertyStatusFilterMenu.click();
-    }
-
-    public void selectActivePropertyFilter() {
-        this.activePropertyFilter.click();
-    }
-
-    public void waitForSearchResults(WebDriver driver) {
+    public void submitSearchApplySortingAndFilters(WebDriver driver, WebElement orderAtoZorZtoA) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 10);
+        this.clearOldSearchAndFilterRecords();
+        this.submitSearch("94523");
         wait.until(ExpectedConditions.visibilityOf(this.searchResultsMenu));
-    }
-
-    public void waitForSearchSpinnerToStop(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        TestHelper.movingIsFinished(By.xpath("//*[@class='th-spinner th-hide']"));
-    }
-
-    public void waitForFilterDropDownMenu(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        this.sortMenu.click();
+        orderAtoZorZtoA.click();
+        this.selectPriceSorting.click();
+        this.propertyStatusFilterMenu.click();
         wait.until(ExpectedConditions.visibilityOf(this.filterDropDownMenu));
-    }
-
-    public void submitSearchApplySortingAndFilters(WebDriver driver, WebElement order) throws InterruptedException {
-        this.clearOldSearchAndFilterRecords(driver);
-        this.submitSearch(driver, "94523");
-        this.waitForSearchResults(driver);
-        this.openSortMenu();
-        this.selectAZorZASorting(order);
-        this.waitForSearchSpinnerToStop(driver);
-        this.selectPriceSorting();
-        this.openPropertyStatusFilterMenu();
-        this.waitForFilterDropDownMenu(driver);
-        this.selectActivePropertyFilter();
+        this.activePropertyFilter.click();
     }
 }

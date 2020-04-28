@@ -25,11 +25,9 @@ public class SortResultTest extends MultipleTest {
         MapPage mapPage = new MapPage(getDriver());
         mapPage.submitSearchApplySortingAndFilters(getDriver(), mapPage.sortAZBtn);
 
-        System.out.println("Number of search result items " + mapPage.searchResultList.size());
         int prevPrice = Integer.MIN_VALUE;
         for (WebElement searchResultItem : mapPage.searchResultList) {
             int currentPrice = Integer.parseInt(searchResultItem.findElement(By.className("th-price")).getText().replaceAll("[$,]", ""));
-            System.out.println("Price of search result item " + currentPrice);
             assertTrue(prevPrice <= currentPrice, String.format("$%d more than $%d", prevPrice, currentPrice));
             prevPrice = currentPrice;
         }
@@ -41,11 +39,9 @@ public class SortResultTest extends MultipleTest {
         MapPage mapPage = new MapPage(getDriver());
         mapPage.submitSearchApplySortingAndFilters(getDriver(), mapPage.sortZABtn);
 
-        System.out.println("Number of search result items " + mapPage.searchResultList.size());
         int prevPrice = Integer.MAX_VALUE;
         for (WebElement searchResultItem : mapPage.searchResultList) {
             int currentPrice = Integer.parseInt(searchResultItem.findElement(By.className("th-price")).getText().replaceAll("[$,]", ""));
-            System.out.println("Price of search result item " + currentPrice);
             assertTrue(prevPrice >= currentPrice, String.format("$%d less than $%d", prevPrice, currentPrice));
             prevPrice = currentPrice;
         }

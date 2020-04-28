@@ -21,7 +21,7 @@ public class ChangeAccountInfoTest extends MultipleTest {
         // Open sign in form from the Home page and login
         HomePage homePage = new HomePage(getDriver());
         LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.login(getDriver(), loginPage.EMAIL, loginPage.PASSWORD);
+        loginPage.login(getDriver(), UserHelper.EMAIL, UserHelper.PASSWORD);
 
         // Close email confirmation failure PopUp window
         homePage.emailConfirmationFailureMsgClose(getDriver());
@@ -99,14 +99,12 @@ public class ChangeAccountInfoTest extends MultipleTest {
         profilePage.openUserProfile(getDriver());
 
         // Verify that email is not updated
-        LoginPage loginPage = new LoginPage(getDriver());
-        assertEquals(loginPage.EMAIL, profilePage.getEmail());
+        assertEquals(UserHelper.EMAIL, profilePage.getEmail());
     }
 
     @Order(6)
     @Test
     void setDown() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.logout(getDriver());
+        new HomePage(getDriver()).logout(getDriver());
     }
 }

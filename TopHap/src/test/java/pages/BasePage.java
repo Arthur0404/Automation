@@ -14,10 +14,6 @@ import java.util.List;
 
 public abstract class BasePage {
 
-    public static final String EMAIL = "qualitya2019+ta1@gmail.com";
-    public static final String PASSWORD = "TopHap";
-    public static final String NAME = "TopHap";
-
     public BasePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -42,10 +38,6 @@ public abstract class BasePage {
     public void moveToElement(WebDriver driver, WebElement element) {
         Actions action = new Actions(driver);
         action.moveToElement(element).perform();
-    }
-
-    public void moveToElement(WebDriver driver, By locator) {
-        moveToElement(driver, driver.findElement(locator));
     }
 
     public void moveToHiddenElement(WebDriver driver, By locator, By locatorDropDown) throws InterruptedException {
@@ -78,13 +70,4 @@ public abstract class BasePage {
             drive.switchTo().defaultContent();
         }
     }
-
-//    public void closeWelcome(WebDriver drive) {
-//        List<WebElement> frames = drive.findElements(By.xpath("//iframe[@title='Intercom Live Chat']"));
-//        if (frames.size() > 0) {
-//            drive.switchTo().frame(frames.get(0));
-//            drive.findElement(By.xpath("//span[@aria-label='Close']")).click();
-//            drive.switchTo().defaultContent();
-//        }
-//    }
 }

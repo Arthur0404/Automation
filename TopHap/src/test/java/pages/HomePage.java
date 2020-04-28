@@ -11,9 +11,6 @@ public class HomePage extends BasePage {
 
     public static final String URL = "https://next.tophap.com/";
 
-    @FindBy(xpath = "//button[text()='Try for Free']")
-    public WebElement tryForFreeButton;
-
     @FindBy(className = "th-signup-button")
     public WebElement signUpButton;
 

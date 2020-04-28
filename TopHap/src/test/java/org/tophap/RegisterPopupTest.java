@@ -25,7 +25,7 @@ class RegisterPopupTest extends SingleTest {
         getDriver().switchTo().activeElement();
         SignUpPage signUpPage = new SignUpPage(getDriver());
         final String EMAIL_RANDOM = String.format("%sTA@example.com", Math.round(Math.random() * 100));
-        signUpPage.signUp(signUpPage.NAME, EMAIL_RANDOM, signUpPage.PASSWORD);
+        signUpPage.signUp(UserHelper.NAME, EMAIL_RANDOM, UserHelper.PASSWORD);
 
         // Authentication Popup should appear
         assertTrue(signUpPage.authentication.isDisplayed());
