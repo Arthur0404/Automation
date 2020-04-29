@@ -1,6 +1,7 @@
 package org.tophap;
 
 import pages.HomePage;
+import pages.LoginPage;
 import pages.ProfilePage;
 import org.junit.jupiter.api.Test;
 import org.tophap.runner.MultipleTest;
@@ -14,13 +15,14 @@ public class ProfileDataVisibilityTest extends MultipleTest {
 
         // Open sign in form from the Home page and login
         HomePage homePage = new HomePage(getDriver());
-        UserHelper.login(getDriver(), UserHelper.EMAIL, UserHelper.PASSWORD);
+        LoginPage loginPage = new LoginPage(getDriver());
+        loginPage.login(getDriver(), loginPage.EMAIL, loginPage.PASSWORD);
 
         // Close email confirmation failure PopUp window
-        UserHelper.emailConfirmationFailureMsgClose(getDriver());
+        homePage.emailConfirmationFailureMsgClose(getDriver());
 
         // Go to My Account page
-        UserHelper.openUserProfile(getDriver());
+        loginPage.openUserProfile(getDriver());
 
         // Verify that all profile info fields are not empty
         ProfilePage profilePage = new ProfilePage(getDriver());
