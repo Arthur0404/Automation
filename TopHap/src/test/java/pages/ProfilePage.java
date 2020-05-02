@@ -3,8 +3,9 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import pages.base.MainPage;
 
-public class ProfilePage extends BasePage {
+public class ProfilePage extends MainPage {
 
     private static final String URL = "https://next.tophap.com/settings/profile";
 
@@ -24,54 +25,39 @@ public class ProfilePage extends BasePage {
     public WebElement emailField;
 
     @FindBy(xpath = "//button[@type='submit']")
-    public WebElement submitButton;
-
-    @FindBy(xpath = "//a[@class='th-logo']")
-    public WebElement siteLogo;
+    public WebElement submitBtn;
 
     @FindBy(className = "th-close-account-button")
-    WebElement deleteAccountButton;
+    WebElement deleteAccountBtn;
 
     @FindBy(xpath = "//div[contains(@class,'th-alert-modal')]//button[contains(@class,'th-ok-action')]")
-    WebElement getDeleteAccOKButton;
+    WebElement getDeleteAccOKBtn;
 
     public ProfilePage(WebDriver driver) {
         super(driver);
     }
 
-    public void submitButtonClick() {
-        submitButton.click();
-    }
-
-    public void openProfilePage(WebDriver driver) {
-        driver.get(URL);
-    }
-
-    public void goToHomePage() {
-        siteLogo.click();
-    }
-
     public void updateName(String name) {
         nameField.clear();
         nameField.sendKeys(name);
-        submitButton.click();
+        submitBtn.click();
     }
 
     public void updateUserName(String userName) {
         usernameField.clear();
         usernameField.sendKeys(userName);
-        submitButton.click();
+        submitBtn.click();
     }
 
     public void updatePhoneNumber(String phoneNumber) {
         phoneNumberField.clear();
         phoneNumberField.sendKeys(phoneNumber);
-        submitButton.click();
+        submitBtn.click();
     }
 
     public void updateEmail(String email) {
         emailField.sendKeys(email);
-        submitButton.click();
+        submitBtn.click();
     }
 
     public String getName() {
@@ -91,8 +77,7 @@ public class ProfilePage extends BasePage {
     }
 
     public void deleteAccount() {
-        deleteAccountButton.click();
-        getDeleteAccOKButton.click();
+        deleteAccountBtn.click();
+        getDeleteAccOKBtn.click();
     }
 }
-

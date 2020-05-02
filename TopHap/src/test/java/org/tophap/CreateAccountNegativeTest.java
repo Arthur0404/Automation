@@ -13,15 +13,11 @@ public class CreateAccountNegativeTest extends SingleTest {
     @Test
     void attemptToCreateAccountWithFailedData() throws InterruptedException {
 
-        // open Sign up form from the Home page
         HomePage homePage = new HomePage(getDriver());
-        homePage.openSignUpWindow();
+        SignUpPage signUpPage = homePage.openSignUp();
 
-        // verify you are on the Sign up form
-        SignUpPage signUpPage = new SignUpPage(getDriver());
         assertEquals("Sign Up for Free", signUpPage.getSignUpWindowHeading());
 
-        // populate Sign up form (Name field leave empty) and Submit
         signUpPage.signUpAttemptNoName("qualityA2019+TA" + Math.round(Math.random()*1000) + "@gmail.com", UserHelper.PASSWORD);
 
         // verify the Name field is mandatory and that you are left of the Sign up form

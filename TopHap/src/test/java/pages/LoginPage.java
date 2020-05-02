@@ -3,11 +3,9 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import pages.base.MainPage;
 
-public class LoginPage extends BasePage{
-
-    @FindBy(xpath = "//a[@class='th-signin-button']")
-    public WebElement signInMenuButton;
+public class LoginPage extends MainPage {
 
     @FindBy(xpath = "//input[@placeholder='E-mail']")
     public WebElement emailField;
@@ -16,17 +14,16 @@ public class LoginPage extends BasePage{
     public WebElement passwordField;
 
     @FindBy(xpath = "//button[@class='MuiButtonBase-root th-button']")
-    public WebElement submitButton;
+    public WebElement submitBtn;
 
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
-    public void login(WebDriver driver, String email, String password) {
-        signInMenuButton.click();
-        driver.switchTo().activeElement();
+    public void login(String email, String password) {
+
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
-        submitButton.click();
+        submitBtn.click();
     }
 }

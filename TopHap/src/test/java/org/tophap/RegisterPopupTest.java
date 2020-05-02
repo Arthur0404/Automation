@@ -14,16 +14,13 @@ class RegisterPopupTest extends SingleTest {
     @Disabled
     @Test
     void registerPopupTest() throws InterruptedException {
-        // Constructor open HomePage URL
-        HomePage homePage = new HomePage(getDriver());
 
-        // Avoiding popup window
-        homePage.closeWelcome(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+        homePage.closeWelcome();
 
         // New user registration
-        homePage.openSignUpWindow();
+        SignUpPage signUpPage = homePage.openSignUp();
         getDriver().switchTo().activeElement();
-        SignUpPage signUpPage = new SignUpPage(getDriver());
         final String EMAIL_RANDOM = String.format("%sTA@example.com", Math.round(Math.random() * 100));
         signUpPage.signUp(UserHelper.NAME, EMAIL_RANDOM, UserHelper.PASSWORD);
 
@@ -35,15 +32,12 @@ class RegisterPopupTest extends SingleTest {
 
         // Go to HomePage and close email confirmation failure PopUp window
         ProfilePage profilePage = new ProfilePage(getDriver());
-        profilePage.goToHomePage();
-        homePage.emailConfirmationFailureMsgClose(getDriver());
+        profilePage.goToHome();
+        homePage.closeEmailConfirmationFailureMsg();
 
-        // Go to My Account page
-        homePage.openUserProfile(getDriver());
-
-        //deleting the account
-        profilePage.deleteAccount();
-        assertTrue(homePage.signUpButton.isDisplayed());
+        // Go to My Account page and deleting the account
+        homePage.openUserProfile().deleteAccount();
+        assertTrue(homePage.signUpMenuBtn.isDisplayed());
     }
 }
 

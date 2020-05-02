@@ -16,14 +16,14 @@ public class SortResultTest extends MultipleTest {
     @Order(1)
     void loginTest() {
         HomePage homePage = new HomePage(getDriver());
-        homePage.tryForFreeStart(getDriver());
+        homePage.tryForFreeStart();
     }
 
     @Test
     @Order(2)
     void sortAZPriceTest() throws InterruptedException {
         MapPage mapPage = new MapPage(getDriver());
-        mapPage.submitSearchApplySortingAndFilters(getDriver(), mapPage.sortAZBtn);
+        mapPage.submitSearchApplySortingAndFilters(mapPage.sortAZBtn);
 
         int prevPrice = Integer.MIN_VALUE;
         for (WebElement searchResultItem : mapPage.searchResultList) {
@@ -37,7 +37,7 @@ public class SortResultTest extends MultipleTest {
     @Order(3)
     void sortZAPriceTest() throws InterruptedException {
         MapPage mapPage = new MapPage(getDriver());
-        mapPage.submitSearchApplySortingAndFilters(getDriver(), mapPage.sortZABtn);
+        mapPage.submitSearchApplySortingAndFilters(mapPage.sortZABtn);
 
         int prevPrice = Integer.MAX_VALUE;
         for (WebElement searchResultItem : mapPage.searchResultList) {

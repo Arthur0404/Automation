@@ -5,7 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestHelper {
 
@@ -51,5 +54,30 @@ public class TestHelper {
 
     public static ExpectedCondition<WebElement> movingIsFinished(final WebElement element) {
         return new MovingExpectedCondition(element);
+    }
+
+    public static void moveToElement(WebDriver driver, WebElement element) {
+        Actions action = new Actions(driver);
+        action.moveToElement(element).perform();
+    }
+
+    public static void moveToHiddenElement(WebDriver driver, WebElement analyticMenuBtn, WebElement moreContainerBtn) throws InterruptedException {
+        Actions action = new Actions(driver);
+        if (analyticMenuBtn.isDisplayed()) {
+            action.moveToElement(analyticMenuBtn).perform();
+        } else {
+            action.moveToElement(moreContainerBtn).perform();
+            TestHelper.moveToElement(driver,
+                    new WebDriverWait(driver, 10).until(TestHelper.movingIsFinished(analyticMenuBtn)));
+        }
+    }
+
+    public static boolean isClickable(WebDriver driver, WebElement element) {
+        try {
+            new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

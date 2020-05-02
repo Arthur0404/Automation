@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.tophap.runner.SingleTest;
 import pages.HomePage;
+import pages.MapPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -47,11 +48,11 @@ public class HoverOverTest extends SingleTest {
     void hoverOverTest() throws InterruptedException {
 
         HomePage homePage = new HomePage(getDriver());
-        homePage.tryForFreeStart(getDriver());
+        MapPage mapPage = homePage.tryForFreeStart();
 
         for (int i = 0; i < BUTTONS_NAMES.length; i++) {
-            homePage.moveToHiddenElement(getDriver(), By.xpath(
-                    String.format("//span[text()='%s']", BUTTONS_NAMES[i])), By.className("th-more-container"));
+            TestHelper.moveToHiddenElement(getDriver(), getDriver().findElement(By.xpath(
+                    String.format("//span[text()='%s']", BUTTONS_NAMES[i]))), mapPage.moreContainerBtn);
             assertTrue(getDriver().findElement(By.xpath(String.format("//div[text()='%s']", HOOVER_OVER_TEXTS[i]))).isDisplayed());
         }
     }

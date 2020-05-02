@@ -1,17 +1,15 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.tophap.TestHelper;
+import pages.base.MainPage;
 
 import java.util.List;
 
-public class MapPage extends BasePage {
+public class MapPage extends MainPage {
 
     @FindBy(id = "th-geo-input")
     public WebElement searchInputField;
@@ -27,7 +25,7 @@ public class MapPage extends BasePage {
     public List<WebElement> clearFilterBtns;
 
     @FindBy(className = "th-search-button")
-    public WebElement searchButton;
+    public WebElement searchBtn;
 
     @FindBy(xpath = "//aside[contains(@class,'th-sider')]")
     public WebElement searchResultsMenu;
@@ -58,6 +56,9 @@ public class MapPage extends BasePage {
     @FindBy(xpath = "//div[@class='jsx-1707507361 th-popover th-popover--expanded th-status-option']")
     public WebElement filterDropDownMenu;
 
+    @FindBy(className = "th-more-container")
+    public WebElement moreContainerBtn;
+
     public MapPage(WebDriver driver) {
         super(driver);
     }
@@ -82,19 +83,18 @@ public class MapPage extends BasePage {
     public void submitSearch(String postalCode) throws InterruptedException {
         this.searchInputField.sendKeys(postalCode);
         Thread.sleep(2000);
-        this.searchButton.click();
+        this.searchBtn.click();
     }
 
-    public void submitSearchApplySortingAndFilters(WebDriver driver, WebElement orderAtoZorZtoA) throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+    public void submitSearchApplySortingAndFilters(WebElement orderAtoZorZtoA) throws InterruptedException {
         this.clearOldSearchAndFilterRecords();
         this.submitSearch("94523");
-        wait.until(ExpectedConditions.visibilityOf(this.searchResultsMenu));
+        getWait10().until(ExpectedConditions.visibilityOf(this.searchResultsMenu));
         this.sortMenu.click();
         orderAtoZorZtoA.click();
         this.selectPriceSorting.click();
         this.propertyStatusFilterMenu.click();
-        wait.until(ExpectedConditions.visibilityOf(this.filterDropDownMenu));
+        getWait10().until(ExpectedConditions.visibilityOf(this.filterDropDownMenu));
         this.activePropertyFilter.click();
     }
 }

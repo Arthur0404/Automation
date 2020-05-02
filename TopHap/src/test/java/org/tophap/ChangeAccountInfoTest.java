@@ -5,106 +5,78 @@ import pages.LoginPage;
 import pages.ProfilePage;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.tophap.runner.MultipleTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ChangeAccountInfoTest extends MultipleTest {
 
-    private static final By LOGO_LOCATOR = By.xpath("//a[@class='th-logo']");
+    private ProfilePage profilePage;
 
     @Order(1)
     @Test
-    void setUp() throws InterruptedException {
+    void login() {
 
-        // Open sign in form from the Home page and login
         HomePage homePage = new HomePage(getDriver());
-        LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.login(getDriver(), UserHelper.EMAIL, UserHelper.PASSWORD);
 
-        // Close email confirmation failure PopUp window
-        homePage.emailConfirmationFailureMsgClose(getDriver());
+        LoginPage loginPage = homePage.openLogin();
+        loginPage.login(UserHelper.EMAIL, UserHelper.PASSWORD);
+        loginPage.closeEmailConfirmationFailureMsg();
 
-        // Go to My Account page
-        loginPage.openUserProfile(getDriver());
+        profilePage = loginPage.openUserProfile();
     }
 
     @Order(2)
     @Test
-    void changeAccountPhoneTest() throws InterruptedException {
+    void changeAccountPhoneTest() {
 
         final String PHONE_NUMBER = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-        ProfilePage profilePage = new ProfilePage(getDriver());
 
-        // Update phone number
         profilePage.updatePhoneNumber(PHONE_NUMBER);
+        profilePage = profilePage.goToHome().openUserProfile();
 
-        // Go to HomePage and come back to ProfilePage
-        profilePage.goToHomePage();
-        profilePage.openUserProfile(getDriver());
-
-        // Verify that phone number is updated
         assertEquals(PHONE_NUMBER, profilePage.getPhoneNumber());
     }
 
     @Order(3)
     @Test
-    void changeAccountNameTest() throws InterruptedException {
+    void changeAccountNameTest() {
 
         final String NAME = String.format("TestTest%s", Math.round(Math.random() * 100));
-        ProfilePage profilePage = new ProfilePage(getDriver());
 
-        // Update name
         profilePage.updateName(NAME);
+        profilePage = profilePage.goToHome().openUserProfile();
 
-        // Go to HomePage and come back to ProfilePage
-        profilePage.goToHomePage();
-        profilePage.openUserProfile(getDriver());
-
-        // Verify that name is updated
         assertEquals(NAME, profilePage.getName());
     }
 
     @Order(4)
     @Test
-    void changeUserNameTest() throws InterruptedException {
+    void changeUserNameTest() {
 
         final String USER_NAME = String.format("TestTest%s", Math.round(Math.random() * 100));
-        ProfilePage profilePage = new ProfilePage(getDriver());
 
-        // Update username
         profilePage.updateUserName(USER_NAME);
+        profilePage = profilePage.goToHome().openUserProfile();
 
-        // Go to HomePage and come back to ProfilePage
-        profilePage.goToHomePage();
-        profilePage.openUserProfile(getDriver());
-
-        // Verify that username is updated
         assertEquals(USER_NAME, profilePage.getUserName());
     }
 
     @Order(5)
     @Test
-    void changeEmailFailureTest() throws InterruptedException {
+    void changeEmailFailureTest() {
 
         final String NEW_EMAIL = "qualitya2019+ta2@gmail.com";
-        ProfilePage profilePage = new ProfilePage(getDriver());
 
-        // Attempt to update email
         profilePage.updateEmail(NEW_EMAIL);
+        profilePage = profilePage.goToHome().openUserProfile();
 
-        // Go to HomePage and come back to ProfilePage
-        profilePage.goToHomePage();
-        profilePage.openUserProfile(getDriver());
-
-        // Verify that email is not updated
         assertEquals(UserHelper.EMAIL, profilePage.getEmail());
     }
 
     @Order(6)
     @Test
-    void setDown() {
-        new HomePage(getDriver()).logout(getDriver());
+    void logout() {
+        profilePage.logout();
     }
 }

@@ -15,14 +15,14 @@ public class ProfileDataVisibilityTest extends MultipleTest {
 
         // Open sign in form from the Home page and login
         HomePage homePage = new HomePage(getDriver());
-        LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.login(getDriver(), UserHelper.EMAIL, UserHelper.PASSWORD);
+        LoginPage loginPage = homePage.openLogin();
+        loginPage.login(UserHelper.EMAIL, UserHelper.PASSWORD);
 
         // Close email confirmation failure PopUp window
-        homePage.emailConfirmationFailureMsgClose(getDriver());
+        homePage.closeEmailConfirmationFailureMsg();
 
         // Go to My Account page
-        loginPage.openUserProfile(getDriver());
+        loginPage.openUserProfile();
 
         // Verify that all profile info fields are not empty
         ProfilePage profilePage = new ProfilePage(getDriver());
