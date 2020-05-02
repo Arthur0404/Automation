@@ -49,9 +49,9 @@ public class MapPage extends MainPage {
     public WebElement activePropertyFilter;
 
     @FindBys({
-            @FindBy(className = "th-item-wrapper")
+            @FindBy(css = ".th-item-wrapper .th-price")
     })
-    public List<WebElement> searchResultList;
+    public List<WebElement> searchResultsPricesList;
 
     @FindBy(xpath = "//div[@class='jsx-1707507361 th-popover th-popover--expanded th-status-option']")
     public WebElement filterDropDownMenu;
