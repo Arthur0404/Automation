@@ -11,7 +11,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tophap.TestHelper;
 import pages.base.MainPage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
 public class MapPage extends MainPage {
@@ -63,6 +66,25 @@ public class MapPage extends MainPage {
 
     @FindBy(className = "th-more-container")
     public WebElement moreContainerBtn;
+
+    private static final Map<String, String> buttonsWithHoverOvers = new HashMap<>();
+
+    static {
+        buttonsWithHoverOvers.put("Listings", "Properties");
+        buttonsWithHoverOvers.put("Value Estimates", "Estimated Property Values");
+        buttonsWithHoverOvers.put("$/ft² Estimates", "Estimated Price per Square Foot");
+        buttonsWithHoverOvers.put("Living Area", "Property Living Area (square feet)");
+        buttonsWithHoverOvers.put("Bedroom Count", "Property Number of Bedrooms");
+        buttonsWithHoverOvers.put("Bathroom Count", "Property Number of Bathrooms");
+        buttonsWithHoverOvers.put("Lot Size", "Property Lot Size (acres)");
+        buttonsWithHoverOvers.put("Age", "Property Age (years)");
+        buttonsWithHoverOvers.put("Ownership Time", "Current Ownership Time (days)");
+        buttonsWithHoverOvers.put("DOM", "Days on market");
+        buttonsWithHoverOvers.put("List vs Sold", "List Price to Sell Price Ratio (%)");
+        buttonsWithHoverOvers.put("Walkability", "National Walkability Index");
+        buttonsWithHoverOvers.put("Elevation", "Elevation above sea level");
+        buttonsWithHoverOvers.put("Permits", "Permits");
+    }
 
     public MapPage(WebDriver driver) {
         super(driver);
@@ -125,6 +147,14 @@ public class MapPage extends MainPage {
             currentResult.accept(currentPrice);
             prevPrice = currentPrice;
             i++;
+        }
+    }
+
+    public void forEachButtonInAnalyticMenu(Consumer<WebElement> eachButtonsHoverOver) throws InterruptedException {
+        for (Map.Entry<String, String> entry : buttonsWithHoverOvers.entrySet()) {
+            TestHelper.moveToHiddenElement(getDriver(), getDriver().findElement(By.xpath(
+                    String.format("//span[text()='%s']", entry.getKey()))), this.moreContainerBtn);
+            eachButtonsHoverOver.accept(getDriver().findElement(By.xpath(String.format("//div[text()='%s']", entry.getValue()))));
         }
     }
 }
