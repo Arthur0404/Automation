@@ -11,7 +11,7 @@ import java.util.List;
 public class SignUpPage extends MainPage {
 
     @FindBy(xpath = "//div[@role='dialog']//h1")
-    public WebElement signUpWindowHeading;
+    public WebElement title;
 
     @FindBy(xpath = "//input[@placeholder='Name']")
     public WebElement nameField;
@@ -50,8 +50,10 @@ public class SignUpPage extends MainPage {
     }
 
     public String getSignUpWindowHeading () {
-        return signUpWindowHeading.getText();
+        return title.getText();
     }
+
+    public String emailConfirmationText() { return emailConfirmation.getText(); }
 
     public void signUpAttemptNoName (String email, String password) {
         this.emailField.sendKeys(email);
@@ -65,7 +67,5 @@ public class SignUpPage extends MainPage {
         passwordField.sendKeys(password);
         submitBtn.click();
     }
-
-    public String emailConfirmationText() { return emailConfirmation.getText(); }
 
 }

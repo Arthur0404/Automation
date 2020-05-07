@@ -33,6 +33,9 @@ public abstract class MainPage extends BasePage {
     @FindBy(xpath = "//button[@class='MuiButtonBase-root th-button th-close-button']")
     public WebElement closeBtn;
 
+    @FindBy(className = "th-close-button")
+    public WebElement closeModalWindowButton;
+
     @FindBy(xpath = "//a[@class='th-logo']")
     public WebElement siteLogo;
 

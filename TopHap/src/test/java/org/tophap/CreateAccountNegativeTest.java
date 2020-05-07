@@ -1,5 +1,6 @@
 package org.tophap;
 
+import org.junit.jupiter.api.Disabled;
 import pages.HomePage;
 import pages.SignUpPage;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateAccountNegativeTest extends SingleTest {
 
+    @Disabled
     @Test
     void attemptToCreateAccountWithFailedData() throws InterruptedException {
 

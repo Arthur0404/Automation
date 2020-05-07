@@ -22,10 +22,9 @@ public class ProfileDataVisibilityTest extends MultipleTest {
         homePage.closeEmailConfirmationFailureMsg();
 
         // Go to My Account page
-        loginPage.openUserProfile();
+        ProfilePage profilePage = loginPage.openUserProfile();
 
         // Verify that all profile info fields are not empty
-        ProfilePage profilePage = new ProfilePage(getDriver());
         assertFalse(profilePage.getName().isEmpty());
         assertFalse(profilePage.getUserName().isEmpty());
         assertFalse(profilePage.getPhoneNumber().isEmpty());

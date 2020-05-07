@@ -31,8 +31,7 @@ class RegisterPopupTest extends SingleTest {
         assertTrue(signUpPage.emailConfirmationText().contains("We have sent an email to verify your account"));
 
         // Go to HomePage and close email confirmation failure PopUp window
-        ProfilePage profilePage = new ProfilePage(getDriver());
-        profilePage.goToHome();
+        homePage.goToHome();
         homePage.closeEmailConfirmationFailureMsg();
 
         // Go to My Account page and deleting the account
