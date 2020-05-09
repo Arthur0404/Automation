@@ -7,15 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tophap.TestHelper;
 import pages.base.MainPage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.IntConsumer;
 
 public class MapPage extends MainPage {
 
@@ -55,11 +54,6 @@ public class MapPage extends MainPage {
 
     @FindBy(xpath = "//label//span[text()='Active']")
     public WebElement activePropertyFilter;
-
-    @FindBys({
-            @FindBy(css = ".th-item-wrapper .th-price")
-    })
-    public List<WebElement> searchResultsPricesList;
 
     @FindBy(xpath = "//div[@class='jsx-1707507361 th-popover th-popover--expanded th-status-option']")
     public WebElement filterDropDownMenu;
@@ -113,9 +107,19 @@ public class MapPage extends MainPage {
         this.searchBtn.click();
     }
 
-    public void submitSearchApplySortingAndFilters(WebElement orderAtoZorZtoA) throws InterruptedException {
+    public void submitSearchApplySortingAndFiltersAZ() throws InterruptedException {
+        submitSearchApplySortingAndFilters(this.sortAZBtn);
+    }
+
+    public void submitSearchApplySortingAndFiltersZA() throws InterruptedException {
+        submitSearchApplySortingAndFilters(this.sortZABtn);
+    }
+
+    public static final String ZIP_TEST = "94523";
+
+    private void submitSearchApplySortingAndFilters(WebElement orderAtoZorZtoA) throws InterruptedException {
         this.clearOldSearchAndFilterRecords();
-        this.submitSearch("94523");
+        this.submitSearch(ZIP_TEST);
         getWait10().until(ExpectedConditions.visibilityOf(this.searchResultsMenu));
         this.sortMenu.click();
         orderAtoZorZtoA.click();
@@ -125,29 +129,31 @@ public class MapPage extends MainPage {
         this.activePropertyFilter.click();
     }
 
-    public int prevPrice;
+    private static final By SEARCH_ITEM_LOCATOR = By.cssSelector(".th-item-wrapper");
 
-    public void forEachItemInSearchResult(IntConsumer currentResult, int criticalValue) throws InterruptedException {
-        prevPrice = criticalValue;
-        int i = 0;
-        List<WebElement> initialSearchResultsPricesList = getDriver().findElements(By.cssSelector(".th-item-wrapper .th-price"));
-        while (true) {
-            if (i == initialSearchResultsPricesList.size() - 1) {
-                ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView();", initialSearchResultsPricesList.get(i));
-                new WebDriverWait(getDriver(), 10).until(TestHelper.movingIsFinished(initialSearchResultsPricesList.get(i)));
-                List<WebElement> currentSearchResultsPricesList = getDriver().findElements(By.cssSelector(".th-item-wrapper .th-price"));
-                i = 1;
-                if (!currentSearchResultsPricesList.equals(initialSearchResultsPricesList)) {
-                    initialSearchResultsPricesList = currentSearchResultsPricesList;
-                } else {
-                    break;
-                }
+    public int forEachItemInSearchResult(Consumer<WebElement> acceptElement) {
+        List<WebElement> resultSearchResultList = new ArrayList<>();
+        int index = 0;
+
+        List<WebElement> currentSearchResultList = getDriver().findElements(SEARCH_ITEM_LOCATOR);
+        while (currentSearchResultList.size() > 0) {
+            WebElement currentElement = currentSearchResultList.get(index);
+            acceptElement.accept(currentElement);
+
+            if (index == currentSearchResultList.size() - 1) {
+                ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView();", currentElement);
+                getWait10().until(TestHelper.movingIsFinished(currentElement));
+
+                resultSearchResultList.addAll(currentSearchResultList);
+                List<WebElement> newSearchResultList = getDriver().findElements(SEARCH_ITEM_LOCATOR);
+                newSearchResultList.removeAll(resultSearchResultList);
+                currentSearchResultList = newSearchResultList;
+                index = -1;
             }
-            int currentPrice = Integer.parseInt(initialSearchResultsPricesList.get(i).getText().replaceAll("[$,]", ""));
-            currentResult.accept(currentPrice);
-            prevPrice = currentPrice;
-            i++;
+            index++;
         }
+
+        return resultSearchResultList.size();
     }
 
     public void forEachButtonInAnalyticMenu(Consumer<WebElement> eachButtonsHoverOver) throws InterruptedException {

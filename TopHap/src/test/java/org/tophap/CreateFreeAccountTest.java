@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.tophap.runner.MultipleTest;
 import pages.*;
 
-import static pages.PricingPage.PlanViewObject;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -41,11 +39,12 @@ public class CreateFreeAccountTest extends MultipleTest {
     void freePlanSelected() {
 
         pricingPage = new PricingPage(getDriver());
-        pricingPage.plansList.forEach(webElement -> {
-            PlanViewObject plan = new PlanViewObject(webElement);
-
-            if (plan.nameIs("Free")) assertTrue(plan.buttonIs("Cancel"));
-            else assertTrue(plan.buttonIs("Get Started") || plan.buttonIs("Call Us"));
+        pricingPage.forEachByPlans((plan, button) -> {
+            if ("Free".equals(plan.getText())) {
+                assertEquals("Cancel", button.getText());
+            } else {
+                assertTrue("Get Started".equals(button.getText()) || "Call Us".equals(button.getText()));
+            }
         });
     }
 

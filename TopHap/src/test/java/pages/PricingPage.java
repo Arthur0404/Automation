@@ -8,34 +8,26 @@ import org.openqa.selenium.support.FindBys;
 import pages.base.MainPage;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class PricingPage extends MainPage {
 
     @FindBys({
             @FindBy(xpath = "//div[contains(@class,'th-plan-info')]")
     })
-    public List<WebElement> plansList;
+    private List<WebElement> plansList;
 
     @FindBy (xpath = "//h1[@class='jsx-948257472 th-page-title']")
     public WebElement pageTitle;
 
     public PricingPage(WebDriver driver) { super(driver); }
 
-    public static class PlanViewObject {
+    public void forEachByPlans(BiConsumer<WebElement, WebElement> test) {
+        for (WebElement element : plansList) {
+            WebElement plan = element.findElement(By.className("th-plan-role"));
+            WebElement button = element.findElement(By.tagName("button"));
 
-        public WebElement button;
-        public WebElement name;
-
-        public PlanViewObject(WebElement plan) {
-            name = plan.findElement(By.className("th-plan-role"));
-            button = plan.findElement(By.tagName("button"));
-        }
-
-        public boolean nameIs(String planName) { return name.getText().equals(planName);
-        }
-
-        public boolean buttonIs(String planName) {
-            return button.getText().equals(planName);
+            test.accept(plan, button);
         }
     }
 }
