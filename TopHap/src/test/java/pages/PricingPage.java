@@ -20,7 +20,9 @@ public class PricingPage extends MainPage {
     @FindBy (xpath = "//h1[@class='jsx-948257472 th-page-title']")
     public WebElement pageTitle;
 
-    public PricingPage(WebDriver driver) { super(driver); }
+    public PricingPage(WebDriver driver) {
+        super(driver);
+    }
 
     public void forEachByPlans(BiConsumer<WebElement, WebElement> test) {
         for (WebElement element : plansList) {
